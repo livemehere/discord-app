@@ -1,17 +1,23 @@
-import cors from "@koa/cors";
-import Koa from "koa";
-import Router from "koa-router";
+import Fastify from "fastify";
+import * as process from "process";
+import cors from "@fastify/cors";
+
+import apiRouter from "./routes";
 
 const PORT = 3000;
-const app = new Koa();
-const router = new Router();
-
-router.get("/", async (ctx, next) => {
-  ctx.body = "health check";
+const fastify = Fastify({
+  logger: true,
 });
 
-app.use(cors());
-app.use(router.routes());
-app.listen(PORT, () => {
-  console.log(`🚀 server is running on ${PORT}`);
-});
+fastify.register(cors);
+fastify.register(apiRouter, { prefix: "/api" });
+
+async function run() {
+  try {
+    await fastify.listen({ port: PORT });
+  } catch (e) {
+    fastify.log.error(e);
+    process.exit(1);
+  }
+}
+run();
