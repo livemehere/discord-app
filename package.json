@@ -8,5 +8,11 @@
     "packages": [
       "packages/**"
     ]
+  },
+  "scripts": {
+    "server:dev": "yarn workspace server dev",
+    "server:build": "yarn workspace server build",
+    "client:dev": "yarn workspace client dev",
+    "client:build": "yarn workspace client build"
   }
 }
