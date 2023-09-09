@@ -6,10 +6,16 @@ import { SubChannel } from "@shared/types/DiscordMessage";
 interface Props {
   value: SubChannel;
   active: boolean;
+  highLight: boolean;
   onClick?: (subChannel: SubChannel) => void;
 }
 
-export const DiscordSubChannel: FC<Props> = ({ value, active, onClick }) => {
+export const DiscordSubChannel: FC<Props> = ({
+  value,
+  active,
+  onClick,
+  highLight,
+}) => {
   return (
     <li
       key={value.id}
@@ -21,7 +27,14 @@ export const DiscordSubChannel: FC<Props> = ({ value, active, onClick }) => {
         cursor: pointer;
         color: var(--text-muted);
         font-weight: 500;
+        border-radius: 6px;
         ${active &&
+        css`
+          color: var(--text-active);
+          background: rgba(255, 255, 255, 0.04);
+        `}
+
+        ${highLight &&
         css`
           color: var(--text-active);
         `}
