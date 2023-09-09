@@ -1,4 +1,5 @@
 {
+  "extends": ["../tsconfig.base.json"],
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -21,7 +22,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@src/*": ["./src/*"]
+      "@src/*": ["./src/*"],
+      "@shared/*": ["../shared/*"]
     }
   },
   "include": ["src"],
