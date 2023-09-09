@@ -67,6 +67,7 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     });
 
     return () => {
+      socket.emit("leave", subChannel.id);
       socket.off("join");
       socket.off("message");
     };
