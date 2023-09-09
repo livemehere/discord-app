@@ -3,6 +3,7 @@ import { FC } from "react";
 import { ChatContent } from "@src/components/ChatContent.tsx";
 import { ChatHeader } from "@src/components/ChatHeader.tsx";
 import { channelStore } from "@src/store/channelStore.ts";
+import { ChatForm } from "@src/components/ChatForm.tsx";
 
 export const Chat: FC = () => {
   const { currentSubChannel } = channelStore();
@@ -10,6 +11,7 @@ export const Chat: FC = () => {
   return (
     <div
       css={css`
+        position: relative;
         flex: 1;
         flex-direction: column;
         display: flex;
@@ -20,6 +22,7 @@ export const Chat: FC = () => {
         <>
           <ChatHeader value={currentSubChannel} />
           <ChatContent value={currentSubChannel} />
+          <ChatForm />
         </>
       )}
     </div>
