@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, RefObject, useEffect, useRef, useState } from "react";
 import { ChatContent } from "@src/components/ChatContent.tsx";
 import { ChatForm } from "@src/components/ChatForm.tsx";
 import { ChatHeader } from "@src/components/ChatHeader.tsx";
@@ -6,6 +6,7 @@ import { Chat, SubChannel } from "@shared/types/DiscordMessage";
 import { useSocket } from "@src/providers/socketProviders/hooks/useSocket.ts";
 import { css } from "@emotion/react";
 import { PopUpChat } from "@src/components/PopUpChat.tsx";
+import { userStore } from "@src/store/userStore.ts";
 
 interface Props {
   subChannel: SubChannel;
@@ -13,44 +14,48 @@ interface Props {
 
 export const DiscordChat: FC<Props> = ({ subChannel }) => {
   const { socket } = useSocket();
+  const { token } = userStore();
   const [chats, setChats] = useState<Chat[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [popUpLastMessage, setPopUpLastMessage] = useState(false);
 
-  const scrollBottom = (force?: boolean) => {
+  const getScrollRatio = (ref: RefObject<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return 0;
+    const { height } = el.getBoundingClientRect();
+    const max = el.scrollHeight - height;
+    const scrollY = el.scrollTop;
+    return scrollY / max;
+  };
+
+  const scrollBottom = () => {
     const container = containerRef.current;
     if (!container) return;
-    if (!force) {
-      const diff = Math.abs(container.scrollTop - container.scrollHeight);
-      if (diff > 1200) {
-        setPopUpLastMessage(true);
-        return;
-      }
-    }
 
-    containerRef.current?.scrollTo({
-      behavior: "smooth",
-      top: containerRef.current?.scrollHeight,
-    });
+    setTimeout(() => {
+      containerRef.current?.scrollTo({
+        behavior: "smooth",
+        top: containerRef.current?.scrollHeight,
+      });
+    }, 100);
   };
 
   const handleSubmit = (value: string) => {
     if (!socket) return;
+
     const newChat: Chat = {
       id: Date.now().toString(),
-      userId: "testId",
+      userId: token || "unknown",
       body: value,
       createdAt: Date.now(),
       subChannelId: subChannel.id,
     };
     socket.emit("message", newChat);
+    scrollBottom();
   };
 
   const handleClickPopUpMessage = () => {
-    setTimeout(() => {
-      scrollBottom(true);
-      setPopUpLastMessage(false);
-    }, 100);
+    scrollBottom();
   };
 
   useEffect(() => {
@@ -61,9 +66,11 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     socket.on("message", (chat: Chat) => {
       setChats((prev) => [...prev, chat]);
 
-      setTimeout(() => {
+      if (getScrollRatio(containerRef) > 0.8) {
         scrollBottom();
-      }, 100);
+      } else {
+        setPopUpLastMessage(true);
+      }
     });
 
     return () => {
@@ -78,8 +85,7 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     if (!container) return;
 
     const handler = () => {
-      const diff = Math.abs(container.scrollTop - container.scrollHeight);
-      if (diff < 1000) {
+      if (getScrollRatio(containerRef) > 1) {
         setPopUpLastMessage(false);
       }
     };
@@ -101,7 +107,6 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
       <ChatContent value={subChannel} chats={chats} ref={containerRef} />
       {popUpLastMessage && (
         <PopUpChat
-          key={chats[chats.length - 1].id}
           chat={chats[chats.length - 1]}
           onClick={handleClickPopUpMessage}
         />

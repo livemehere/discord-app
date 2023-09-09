@@ -10,11 +10,13 @@ interface SocketProviderProps {
 interface SocketContextValue {
   socket?: Socket;
   connected: boolean;
+  login: (token: string) => void;
 }
 
 export const SocketContext = createContext<SocketContextValue>({
   socket: undefined,
   connected: false,
+  login: () => {},
 });
 
 export const SocketProvider: FC<SocketProviderProps> = ({
@@ -24,6 +26,11 @@ export const SocketProvider: FC<SocketProviderProps> = ({
 }) => {
   const [socket, setSocket] = useState<Socket>();
   const [connected, setConnected] = useState(false);
+
+  const login = (token: string) => {
+    if (!socket) return;
+    socket.emit("login", token);
+  };
 
   useEffect(() => {
     const socket = io(url);
@@ -48,7 +55,7 @@ export const SocketProvider: FC<SocketProviderProps> = ({
   }, [socket]);
 
   return (
-    <SocketContext.Provider value={{ socket, connected }}>
+    <SocketContext.Provider value={{ socket, connected, login }}>
       {socket ? children : fallback}
     </SocketContext.Provider>
   );

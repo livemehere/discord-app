@@ -7,8 +7,8 @@ const instance = axios.create({
   baseURL: SERVER_URL,
 });
 
-export const getMe = () =>
-  instance.get<User>("users/me").then((res) => res.data);
+export const getMe = (token: string) =>
+  instance.get<User>("users/me", { params: { token } }).then((res) => res.data);
 
 export const getChannels = () =>
   instance

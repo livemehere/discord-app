@@ -1,14 +1,18 @@
 import { FastifyPluginAsync } from "fastify";
 import { Chat } from "../../../shared/types/DiscordMessage";
 
+const getUserByToken = (token: string) => {
+  return `ID:${token}`;
+};
+
 const wsRouter: FastifyPluginAsync = async (fastify) => {
   fastify.io.on("connection", (socket) => {
     console.log(`${socket.id} connected!`);
 
     // 1.userId 등록
-    socket.on("login", (userId) => {
-      console.log(`${userId} login!`);
-      socket.data.userId = userId;
+    socket.on("login", (token: string) => {
+      socket.data.userId = getUserByToken(token);
+      console.log(`${socket.data.userId}님이 로그인하였습니다`);
     });
 
     // 2.특정 채널 참가

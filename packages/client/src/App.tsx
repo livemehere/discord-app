@@ -1,9 +1,7 @@
 import { SocketProvider } from "@src/providers/socketProviders/Provider.tsx";
-import { SideBar } from "@src/components/SideBar.tsx";
-import { Layout } from "@src/components/Layout.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ChatContainer } from "@src/components/ChatContainer.tsx";
-import { SubSideBar } from "@src/components/SubSideBar.tsx";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "@src/pages/Home.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,11 +20,11 @@ function App() {
       fallback={<div>loading...</div>}
     >
       <QueryClientProvider client={queryClient}>
-        <Layout>
-          <SideBar />
-          <SubSideBar />
-          <ChatContainer />
-        </Layout>
+        <BrowserRouter>
+          <Routes>
+            <Route path={"/"} element={<Home />} />
+          </Routes>
+        </BrowserRouter>
       </QueryClientProvider>
     </SocketProvider>
   );

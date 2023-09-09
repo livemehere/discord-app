@@ -29,11 +29,11 @@ export const ChatForm: FC<Props> = ({ onSubmit }) => {
         css={css`
           display: flex;
           align-items: center;
-          justify-content: center;
           background: var(--background-10);
           width: 94%;
           border-radius: 6px;
           margin: auto;
+          padding-left: 8px;
         `}
       >
         <button
@@ -50,6 +50,9 @@ export const ChatForm: FC<Props> = ({ onSubmit }) => {
           css={css`
             padding: 11px 8px 11px 2px;
             width: 90%;
+            line-height: 120%;
+            transform: translateY(1px);
+            background: transparent;
           `}
           type="text"
           value={value}

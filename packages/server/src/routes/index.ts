@@ -1,12 +1,13 @@
-import { FastifyPluginAsync } from "fastify";
+import { FastifyPluginAsync, FastifyRequest } from "fastify";
 import { User } from "../../../shared/types/User";
 import { Channel, Chat } from "../../../shared/types/DiscordMessage";
 
 const router: FastifyPluginAsync = async (fastify, options) => {
-  fastify.get("/users/me", async () => {
+  fastify.get("/users/me", async (req) => {
+    const { token } = req.query as any;
     return {
-      id: "testId",
-      username: "kong",
+      id: `test-${token}`,
+      username: `nickname-${token}`,
       createdAt: Date.now(),
       profileUrl:
         "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",

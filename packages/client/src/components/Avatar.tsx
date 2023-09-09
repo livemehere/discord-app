@@ -12,6 +12,8 @@ export const Avatar: FC<Props> = ({ profileUrl, size = 32, bgColor }) => {
   return (
     <div
       css={css`
+        min-width: ${size}px;
+        min-height: ${size}px;
         width: ${size}px;
         height: ${size}px;
         border-radius: 50%;

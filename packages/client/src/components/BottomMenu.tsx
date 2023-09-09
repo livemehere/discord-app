@@ -3,11 +3,14 @@ import { FC } from "react";
 import { useMe } from "@src/hooks/reactQueries/useMe.ts";
 import { Avatar } from "@src/components/Avatar.tsx";
 import { GlobalSettingButtons } from "@src/components/GlobalSettingButtons.tsx";
+import { useSearchParams } from "react-router-dom";
 
 interface Props {}
 
 export const BottomMenu: FC<Props> = ({}) => {
-  const { data } = useMe();
+  const [params] = useSearchParams();
+  const { data } = useMe(params.get("token") || "unknownUser");
+
   return (
     <div
       css={css`
