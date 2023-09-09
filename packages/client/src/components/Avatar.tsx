@@ -27,7 +27,7 @@ export const Avatar: FC<Props> = ({ profileUrl, size = 32, bgColor }) => {
 
         svg,
         img {
-          width: 20px;
+          width: ${size - 8}px;
         }
       `}
     >

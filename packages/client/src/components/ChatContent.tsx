@@ -1,33 +1,42 @@
 import { css } from "@emotion/react";
-import { FC } from "react";
+import { forwardRef } from "react";
 import SharpIcon from "@src/assets/svg/sharp.svg";
 import { DefaultChatContent } from "@src/components/DefaultChatContent.tsx";
-import { SubChannel } from "@shared/types/DiscordMessage";
+import { Chat, SubChannel } from "@shared/types/DiscordMessage";
+import { ChatItem } from "@src/components/ChatItem.tsx";
 
 interface Props {
   value: SubChannel;
+  chats: Chat[];
 }
 
-export const ChatContent: FC<Props> = ({ value }) => {
-  return (
-    <section
-      css={css`
-        flex: 1;
-        overflow-y: scroll;
-      `}
-    >
-      <div
+export const ChatContent = forwardRef<HTMLDivElement, Props>(
+  ({ value, chats }, ref) => {
+    return (
+      <section
+        ref={ref}
         css={css`
-          height: 200vh;
-          padding-top: 40px;
+          flex: 1;
+          padding: 0 20px 0 16px;
+          overflow: scroll;
+          height: calc(100% - 50px - 46px);
         `}
       >
-        <DefaultChatContent
-          icon={<SharpIcon />}
-          title={value.name}
-          description={value.description}
-        />
-      </div>
-    </section>
-  );
-};
+        <div
+          css={css`
+            padding-top: 40px;
+          `}
+        >
+          <DefaultChatContent
+            icon={<SharpIcon />}
+            title={value.name}
+            description={value.description}
+          />
+          {chats.map((chat) => (
+            <ChatItem key={chat.id} chat={chat} />
+          ))}
+        </div>
+      </section>
+    );
+  },
+);

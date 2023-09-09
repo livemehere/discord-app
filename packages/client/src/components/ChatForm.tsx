@@ -1,12 +1,16 @@
 import { css } from "@emotion/react";
-import { FormEvent, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import AddIcon from "@src/assets/svg/add.svg";
 
-export const ChatForm = () => {
+interface Props {
+  onSubmit: (value: string) => void;
+}
+
+export const ChatForm: FC<Props> = ({ onSubmit }) => {
   const [value, setValue] = useState("");
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(value);
+    onSubmit(value);
     setValue("");
   };
   return (
@@ -17,6 +21,7 @@ export const ChatForm = () => {
         right: 0;
         bottom: 0;
         padding-bottom: 20px;
+        background: var(--background-100);
       `}
     >
       <form
@@ -26,7 +31,7 @@ export const ChatForm = () => {
           align-items: center;
           justify-content: center;
           background: var(--background-10);
-          width: 90%;
+          width: 94%;
           border-radius: 6px;
           margin: auto;
         `}

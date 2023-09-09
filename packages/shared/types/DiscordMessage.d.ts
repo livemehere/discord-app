@@ -1,5 +1,5 @@
 export type Channel = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   subChannels: SubChannel[];
@@ -7,9 +7,17 @@ export type Channel = {
 };
 
 export type SubChannel = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   type: string;
   createdAt: number;
+};
+
+export type Chat = {
+  id: string;
+  userId: string;
+  body: string;
+  createdAt: number;
+  subChannelId: string;
 };

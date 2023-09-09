@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
+import { Chat } from "../../../shared/types/DiscordMessage";
 
 const wsRouter: FastifyPluginAsync = async (fastify) => {
   fastify.io.on("connection", (socket) => {
@@ -14,7 +15,7 @@ const wsRouter: FastifyPluginAsync = async (fastify) => {
     socket.on("join", (rooms) => {
       socket.join(rooms);
       console.log(
-        `${socket.data.userId}(${socket.data.userId}) 유저가 room 에 참여하였습니다`,
+        `${socket.id}(${socket.data.userId}) 유저가 room 에 참여하였습니다`,
       );
       console.log(socket.rooms);
     });
@@ -36,10 +37,10 @@ const wsRouter: FastifyPluginAsync = async (fastify) => {
     });
 
     // 3.특정 room(디스코드채널) 으로 메세지 전송 (본인 포함)
-    socket.on("message", (payload) => {
-      const { rooms, body } = payload;
-      console.log(`${rooms}에 메세지 전송`, body);
-      fastify.io.to(rooms).emit("message", body);
+    socket.on("message", (chat: Chat) => {
+      const room = chat.subChannelId;
+      console.log(`${room}에 메세지 전송`, chat);
+      fastify.io.to(room).emit("message", chat);
     });
 
     // 4.연결을 해제하면 속해있던 room(디스코드채널)에 전송

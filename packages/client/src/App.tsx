@@ -2,7 +2,7 @@ import { SocketProvider } from "@src/providers/socketProviders/Provider.tsx";
 import { SideBar } from "@src/components/SideBar.tsx";
 import { Layout } from "@src/components/Layout.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Chat } from "@src/components/Chat.tsx";
+import { ChatContainer } from "@src/components/ChatContainer.tsx";
 import { SubSideBar } from "@src/components/SubSideBar.tsx";
 
 const queryClient = new QueryClient({
@@ -25,7 +25,7 @@ function App() {
         <Layout>
           <SideBar />
           <SubSideBar />
-          <Chat />
+          <ChatContainer />
         </Layout>
       </QueryClientProvider>
     </SocketProvider>

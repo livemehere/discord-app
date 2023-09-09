@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from "fastify";
 import { User } from "../../../shared/types/User";
-import { Channel } from "../../../shared/types/DiscordMessage";
+import { Channel, Chat } from "../../../shared/types/DiscordMessage";
 
 const router: FastifyPluginAsync = async (fastify, options) => {
   fastify.get("/users/me", async () => {
@@ -17,20 +17,20 @@ const router: FastifyPluginAsync = async (fastify, options) => {
     return {
       channels: [
         {
-          id: 1,
+          id: "1",
           name: "개발자모임",
           description: "설명입니다~",
           createdAt: Date.now(),
           subChannels: [
             {
-              id: 2,
+              id: "2",
               name: "공지",
               description: "설명입니다~",
               type: "text",
               createdAt: Date.now(),
             },
             {
-              id: 3,
+              id: "3",
               name: "수다",
               description: "설명입니다~",
               type: "voice",
@@ -39,21 +39,21 @@ const router: FastifyPluginAsync = async (fastify, options) => {
           ],
         },
         {
-          id: 4,
+          id: "4",
           name: "게임모임",
           description: "설명입니다~",
           createdAt: Date.now(),
 
           subChannels: [
             {
-              id: 5,
+              id: "5",
               name: "공지",
               description: "설명입니다~",
               type: "text",
               createdAt: Date.now(),
             },
             {
-              id: 6,
+              id: "6",
               name: "리그오브레전드",
               description: "설명입니다~",
               type: "voice",
@@ -63,6 +63,32 @@ const router: FastifyPluginAsync = async (fastify, options) => {
         },
       ],
     } as { channels: Channel[] };
+  });
+
+  fastify.get("/channels/:channelId/chats", async (req) => {
+    console.log(req.params);
+    return {
+      chats: [
+        {
+          id: "1",
+          body: "hey!",
+          createdAt: Date.now() - 20000,
+          userId: "testId",
+        },
+        {
+          id: "2",
+          body: "how!",
+          createdAt: Date.now() - 10000,
+          userId: "testId",
+        },
+        {
+          id: "3",
+          body: "are!",
+          createdAt: Date.now() - 2000,
+          userId: "testId",
+        },
+      ],
+    } as { chats: Chat[] };
   });
 };
 
