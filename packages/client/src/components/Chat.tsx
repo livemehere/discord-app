@@ -25,6 +25,7 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     const { height } = el.getBoundingClientRect();
     const max = el.scrollHeight - height;
     const scrollY = el.scrollTop;
+    if (max <= 0) return 0;
     return scrollY / max;
   };
 
@@ -66,9 +67,13 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     socket.on("message", (chat: Chat) => {
       setChats((prev) => [...prev, chat]);
 
-      if (getScrollRatio(containerRef) > 0.8) {
+      if (
+        getScrollRatio(containerRef) > 0.8 ||
+        getScrollRatio(containerRef) === 0
+      ) {
         scrollBottom();
       } else {
+        console.log(chat);
         setPopUpLastMessage(true);
       }
     });
