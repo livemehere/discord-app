@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum SubChannelType {
+  AUDIO_TEXT
+  TEXT
+}
+
+model User {
+  id         String   @id @default(uuid())
+  username   String   @unique
+  profileUrl String?
+  createdAt  DateTime @default(now())
+
+  Chat     Chat[]
+  channels UsersChannels[]
+}
+
+model Channel {
+  id              String   @id @default(uuid())
+  name            String   @unique()
+  description     String?
+  channelImageUrl String?
+  createdAt       DateTime @default(now())
+
+  moderatorId String
+
+  subChannels SubChannel[]
+  members     UsersChannels[]
+}
+
+model UsersChannels {
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  channelId String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  @@id([userId, channelId])
+}
+
+model SubChannel {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  type        SubChannelType
+  createdAt   DateTime       @default(now())
+
+  channelId String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  Chat      Chat[]
+}
+
+model Chat {
+  id        String    @id @default(uuid())
+  body      String    @db.Text
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  subChannelId String
+  subChannel   SubChannel @relation(fields: [subChannelId], references: [id], onDelete: Cascade)
+}

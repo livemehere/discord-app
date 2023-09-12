@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: kong1234
+      MYSQL_DATABASE: discord
+    networks:
+      - inner_net
+
+  server:
+    build: .
+    ports:
+      - "3000:3000"
+    networks:
+      - inner_net
+    depends_on:
+      - db
+    restart: always
+
+networks:
+  inner_net:
