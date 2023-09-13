@@ -14,6 +14,14 @@ export const SubSideBar = () => {
         background-color: var(--background-200);
       `}
     >
+      <h3
+        css={css`
+          padding: 13.8px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.36);
+        `}
+      >
+        {currentChannel?.name}
+      </h3>
       <DiscordSubChannels
         value={currentSubChannel}
         list={subChannels}
