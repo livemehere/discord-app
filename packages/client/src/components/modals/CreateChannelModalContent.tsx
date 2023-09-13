@@ -7,6 +7,7 @@ import { createChannel } from "@src/api";
 import { userStore } from "@src/store/userStore.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import { CHANNELS_KEY } from "@src/hooks/reactQueries/useChannels.ts";
+import { channelStore } from "@src/store/channelStore.ts";
 
 interface Props {
   close: () => void;
@@ -16,15 +17,18 @@ export const CreateChannelModalContent: FC<Props> = ({ close }) => {
   const [channelName, setChannelName] = useState("");
   const [description, setDescription] = useState("");
   const { user } = userStore();
+  const { setChannel, setSubChannel } = channelStore();
   const queryClient = useQueryClient();
   const handleCreate = async () => {
     if (!user) return;
-    await createChannel({
+    const newChannel = await createChannel({
       name: channelName,
       description,
       moderatorId: user.id,
     });
     await queryClient.invalidateQueries({ queryKey: [CHANNELS_KEY] });
+    setChannel(newChannel);
+    setSubChannel(newChannel.subChannels[0]);
     close();
   };
   return (
