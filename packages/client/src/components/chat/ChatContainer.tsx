@@ -3,10 +3,12 @@ import { FC } from "react";
 import { channelStore } from "@src/store/channelStore.ts";
 import { DiscordChat } from "@src/components/chat/Chat.tsx";
 import { useChannels } from "@src/hooks/reactQueries/useChannels.ts";
+import { userStore } from "@src/store/userStore";
 
 export const ChatContainer: FC = () => {
   const { currentSubChannelId, currentChannelId } = channelStore();
-  const { getChannelById, getSubChannelById } = useChannels();
+  const { user } = userStore();
+  const { getChannelById, getSubChannelById } = useChannels(user?.id);
   const currentChannel = getChannelById(currentChannelId);
   const currentSubChannel = getSubChannelById(
     currentSubChannelId,
