@@ -1,6 +1,6 @@
 import axios from "axios";
 import { config } from "@src/config";
-import { Channel, Chat, User } from "@src/types";
+import { Channel, Chat, SubChannel, User } from "@src/types";
 
 const instance = axios.create({
   baseURL: config.SERVER_URL,
@@ -29,6 +29,11 @@ export const createChannel = ({
   instance
     .post<Channel>("api/channels", { name, description, moderatorId })
     .then((res) => res.data);
+
+export const createSubChannel = (
+  channelId: string,
+  body: { name: string; description: string; type: SubChannel["type"] },
+) => instance.post<SubChannel>(`api/channels/${channelId}/subChannels`, body);
 
 export const getChats = ({
   subChannelId,

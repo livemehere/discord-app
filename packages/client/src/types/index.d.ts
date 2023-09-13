@@ -25,7 +25,7 @@ export interface SubChannel {
   id: string;
   name: string;
   description: any;
-  type: string;
+  type: "TEXT" | "AUDIO_TEXT";
   createdAt: string;
   channelId: string;
 }
