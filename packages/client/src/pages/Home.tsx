@@ -5,7 +5,7 @@ import { ChatContainer } from "@src/components/ChatContainer.tsx";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { userStore } from "@src/store/userStore.ts";
-import { useSocket } from "@src/providers/socketProviders/hooks/useSocket.ts";
+import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { getUserByName, signUp } from "@src/api";
 
 export function Home() {

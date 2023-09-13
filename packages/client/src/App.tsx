@@ -1,9 +1,10 @@
-import { SocketProvider } from "@src/providers/socketProviders/Provider.tsx";
+import { SocketProvider } from "@src/providers/SocketProvider/Provider.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "@src/pages/Home.tsx";
 import { config } from "@src/config";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ModalProvider } from "@src/providers/ModalProvider/Provider.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,11 +21,13 @@ function App() {
     <SocketProvider url={config.SERVER_URL}>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
-        <BrowserRouter>
-          <Routes>
-            <Route path={"/"} element={<Home />} />
-          </Routes>
-        </BrowserRouter>
+        <ModalProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path={"/"} element={<Home />} />
+            </Routes>
+          </BrowserRouter>
+        </ModalProvider>
       </QueryClientProvider>
     </SocketProvider>
   );

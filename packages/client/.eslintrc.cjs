@@ -15,6 +15,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "unused-imports/no-unused-imports": "error",
-    "@typescript-eslint/no-explicit-any":"off"
+    "@typescript-eslint/no-explicit-any":"off",
+    "@typescript-eslint/ban-ts-comment":"off"
   },
 }

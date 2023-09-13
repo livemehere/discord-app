@@ -2,7 +2,7 @@ import { FC, RefObject, useEffect, useRef, useState } from "react";
 import { ChatContent } from "@src/components/ChatContent.tsx";
 import { ChatForm } from "@src/components/ChatForm.tsx";
 import { ChatHeader } from "@src/components/ChatHeader.tsx";
-import { useSocket } from "@src/providers/socketProviders/hooks/useSocket.ts";
+import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { css } from "@emotion/react";
 import { PopUpChat } from "@src/components/PopUpChat.tsx";
 import { userStore } from "@src/store/userStore.ts";

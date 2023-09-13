@@ -3,6 +3,8 @@ import { DiscordSideButton } from "@src/components/DiscordSideButton.tsx";
 import { css } from "@emotion/react";
 import { Channel } from "@src/types";
 import AddIcon from "@src/assets/svg/add.svg";
+import { useModal } from "@src/providers/ModalProvider/hook.ts";
+import { CreateChannelModalContent } from "@src/components/modals/CreateChannelModalContent.tsx";
 
 interface Props {
   list?: Channel[];
@@ -11,6 +13,14 @@ interface Props {
 }
 
 export const DiscordChannels: FC<Props> = ({ list, onChange, value }) => {
+  const { pushModal, closeModal } = useModal();
+
+  const handleCreateChannel = () => {
+    const key = pushModal(
+      <CreateChannelModalContent close={() => closeModal(key)} />,
+    );
+  };
+
   return (
     <nav
       css={css`
@@ -27,7 +37,7 @@ export const DiscordChannels: FC<Props> = ({ list, onChange, value }) => {
           <h2>{channel.name.slice(0, 1)}</h2>
         </DiscordSideButton>
       ))}
-      <DiscordSideButton onClick={() => alert("생성")}>
+      <DiscordSideButton onClick={handleCreateChannel}>
         <AddIcon />
       </DiscordSideButton>
     </nav>
