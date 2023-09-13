@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
-import { FC, HTMLAttributes } from "react";
+import { ButtonHTMLAttributes, FC } from "react";
 
-export const ModalButton: FC<HTMLAttributes<HTMLButtonElement>> = ({
+export const ModalButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
   ...props
 }) => {
@@ -14,6 +14,12 @@ export const ModalButton: FC<HTMLAttributes<HTMLButtonElement>> = ({
         padding: 2px 16px;
         height: 38px;
         font-size: 14px;
+        ${props.disabled &&
+        css`
+          opacity: 0.8;
+          color: var(--text-muted);
+          cursor: default;
+        `}
       `}
       {...props}
     >

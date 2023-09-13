@@ -19,7 +19,6 @@ export const ModalHeader: FC<Props> = ({ close, title, desc }) => {
         className="header"
         css={css`
           position: absolute;
-          top: -24px;
           right: 0;
           display: flex;
           justify-content: end;
@@ -34,14 +33,15 @@ export const ModalHeader: FC<Props> = ({ close, title, desc }) => {
         css={css`
           text-align: center;
           margin-bottom: 6px;
-          margin-top: 24px;
+          padding-top: 24px;
+          color: var(--text-normal);
         `}
       >
         {title}
       </h2>
       <p
         css={css`
-          color: var(--gray-300);
+          color: var(--text-muted);
           padding: 6px 12px;
         `}
       >

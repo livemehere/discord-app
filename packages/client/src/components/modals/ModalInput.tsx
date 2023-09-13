@@ -8,7 +8,7 @@ export const ModalInput = forwardRef<
   return (
     <div
       css={css`
-        background-color: rgba(0, 0, 0, 0.08);
+        background-color: rgb(30, 31, 34);
       `}
     >
       <input
@@ -19,7 +19,7 @@ export const ModalInput = forwardRef<
           background-color: transparent;
           width: 100%;
           padding: 10px;
-          color: rgb(49, 51, 56);
+          color: rgb(219, 222, 225);
           border-radius: 3px;
         `}
         {...props}

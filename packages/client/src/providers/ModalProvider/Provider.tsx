@@ -94,7 +94,6 @@ const ModalContainer = forwardRef<HTMLDivElement, { children: ReactNode }>(
       <motion.div
         ref={ref}
         css={css`
-          background: #fff;
           border-radius: 4px;
         `}
         initial={{ scale: 0.3 }}

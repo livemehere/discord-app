@@ -16,6 +16,7 @@ interface Props {
 export const CreateChannelModalContent: FC<Props> = ({ close }) => {
   const [channelName, setChannelName] = useState("");
   const [description, setDescription] = useState("");
+  const disabled = channelName.length < 10;
   const { user } = userStore();
   const { setChannel, setSubChannel } = channelStore();
   const queryClient = useQueryClient();
@@ -37,6 +38,8 @@ export const CreateChannelModalContent: FC<Props> = ({ close }) => {
         color: var(--border-black);
         width: 400px;
         max-width: 80vw;
+        background: rgb(49, 51, 56);
+        border-radius: 3px;
       `}
     >
       <ModalHeader
@@ -71,6 +74,7 @@ export const CreateChannelModalContent: FC<Props> = ({ close }) => {
         </div>
         <ModalButton
           onClick={handleCreate}
+          disabled={disabled}
           css={css`
             display: block;
             margin-top: 14px;
