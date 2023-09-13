@@ -19,7 +19,9 @@ export const useChats = ({ subChannelId }: Options) => {
         };
       },
       getNextPageParam: (lastPage) => {
-        return lastPage[lastPage.length - 1]?.id;
+        return lastPage.length >= 20
+          ? lastPage[lastPage.length - 1]?.id
+          : undefined;
       },
     },
   );
