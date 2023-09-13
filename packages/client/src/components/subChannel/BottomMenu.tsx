@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
-import { Avatar } from "@src/components/Avatar.tsx";
-import { GlobalSettingButtons } from "@src/components/GlobalSettingButtons.tsx";
+import { Avatar } from "@src/components/common/Avatar.tsx";
+import { GlobalSettingButtons } from "@src/components/subChannel/GlobalSettingButtons.tsx";
 import { userStore } from "@src/store/userStore.ts";
 
 export const BottomMenu = () => {

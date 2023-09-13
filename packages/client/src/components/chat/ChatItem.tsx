@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
-import { Avatar } from "@src/components/Avatar.tsx";
+import { Avatar } from "@src/components/common/Avatar.tsx";
 import { format } from "@src/utils/time.ts";
 import { Chat } from "@src/types";
 

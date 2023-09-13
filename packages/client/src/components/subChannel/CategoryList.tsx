@@ -5,12 +5,14 @@ interface Props {
   children: ReactNode;
   toggleButton: ReactNode;
   showChildren: boolean;
+  right?: ReactNode;
 }
 
 export const CategoryList: FC<Props> = ({
   children,
   toggleButton,
   showChildren,
+  right,
 }) => {
   return (
     <div
@@ -23,9 +25,16 @@ export const CategoryList: FC<Props> = ({
           color: var(--text-muted);
           font-size: 12px;
           margin-bottom: 6px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          :hover {
+            color: var(--text-active);
+          }
         `}
       >
-        {toggleButton}
+        <div>{toggleButton}</div>
+        <div>{right}</div>
       </div>
       <div>{showChildren && children}</div>
     </div>

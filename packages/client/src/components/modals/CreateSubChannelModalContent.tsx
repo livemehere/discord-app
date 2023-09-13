@@ -3,40 +3,48 @@ import { FC, useState } from "react";
 import { ModalHeader } from "@src/components/modals/ModalHeader.tsx";
 import { ModalInput } from "@src/components/modals/ModalInput.tsx";
 import { ModalButton } from "@src/components/modals/ModalButton.tsx";
-import { createChannel } from "@src/api";
+import { createSubChannel } from "@src/api";
 import { userStore } from "@src/store/userStore.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import { CHANNELS_KEY } from "@src/hooks/reactQueries/useChannels.ts";
 import { channelStore } from "@src/store/channelStore.ts";
+import { ModalRadio } from "@src/components/modals/ModalRadio.tsx";
+import SharpIcon from "@src/assets/svg/sharp.svg";
+import SpeakerIcon from "@src/assets/svg/speaker.svg";
+import { ModalSmallTitle } from "@src/components/modals/ModalSmallTitle.tsx";
+import { SubChannel } from "@src/types";
 
 interface Props {
   close: () => void;
 }
 
-export const CreateChannelModalContent: FC<Props> = ({ close }) => {
+export const CreateSubChannelModalContent: FC<Props> = ({ close }) => {
   const [channelName, setChannelName] = useState("");
   const [description, setDescription] = useState("");
+  const [type, setType] = useState<SubChannel["type"]>("TEXT");
   const disabled = channelName.length < 2;
   const { user } = userStore();
-  const { setChannelId, setSubChannelId } = channelStore();
+  const { setSubChannelId, currentChannelId, setChannelId } = channelStore();
   const queryClient = useQueryClient();
+
   const handleCreate = async () => {
-    if (!user) return;
-    const newChannel = await createChannel({
+    if (!user || !currentChannelId) return;
+    const newSubChannel = await createSubChannel(currentChannelId, {
       name: channelName,
       description,
-      moderatorId: user.id,
-    });
+      type,
+    }).then((res) => res.data);
     await queryClient.invalidateQueries({ queryKey: [CHANNELS_KEY] });
-    setChannelId(newChannel.id);
-    setSubChannelId(newChannel.subChannels[0].id);
+    setSubChannelId(newSubChannel.id);
+    setChannelId(newSubChannel.channelId);
     close();
   };
+
   return (
     <div
       css={css`
         color: var(--border-black);
-        width: 400px;
+        width: 469px;
         max-width: 80vw;
         background: rgb(49, 51, 56);
         border-radius: 8px;
@@ -45,22 +53,43 @@ export const CreateChannelModalContent: FC<Props> = ({ close }) => {
       <ModalHeader
         close={close}
         title={"채널 만들기"}
-        desc={
-          "서버는 나와 친구들이 함께 어울리는 공간입니다. 내 서버를 만들고 대화를 시작해보세요."
-        }
+        desc={":채팅 채널에 속해 있음"}
       />
       <div
         css={css`
           padding: 12px;
         `}
       >
+        <ModalSmallTitle>채널 유형</ModalSmallTitle>
+        <div>
+          <ModalRadio
+            value={type}
+            onChange={(v) => setType(v)}
+            list={[
+              {
+                value: "TEXT",
+                desc: "메시지, 이미지, GIF, 이모지, 의견, 농담을 전송하세요",
+                label: "Text",
+                icon: <SharpIcon width={20} height={20} />,
+              },
+              {
+                value: "AUDIO_TEXT",
+                desc: "음성, 영상, 화면 공유로 함께 어울리세요",
+                label: "Voice",
+                icon: <SpeakerIcon width={20} height={20} />,
+              },
+            ]}
+          />
+        </div>
         <div
           css={css`
             display: flex;
             flex-direction: column;
             gap: 8px;
+            margin-top: 20px;
           `}
         >
+          <ModalSmallTitle>채널 이름</ModalSmallTitle>
           <ModalInput
             value={channelName}
             placeholder={"채널명"}
@@ -81,7 +110,7 @@ export const CreateChannelModalContent: FC<Props> = ({ close }) => {
             margin-left: auto;
           `}
         >
-          채널 생성
+          채널 만들기
         </ModalButton>
       </div>
     </div>

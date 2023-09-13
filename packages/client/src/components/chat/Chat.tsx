@@ -1,10 +1,10 @@
 import { FC, RefObject, useEffect, useRef, useState } from "react";
-import { ChatContent } from "@src/components/ChatContent.tsx";
-import { ChatForm } from "@src/components/ChatForm.tsx";
-import { ChatHeader } from "@src/components/ChatHeader.tsx";
+import { ChatContent } from "@src/components/chat/ChatContent.tsx";
+import { ChatForm } from "@src/components/chat/ChatForm.tsx";
+import { ChatHeader } from "@src/components/chat/ChatHeader.tsx";
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { css } from "@emotion/react";
-import { PopUpChat } from "@src/components/PopUpChat.tsx";
+import { PopUpChat } from "@src/components/chat/PopUpChat.tsx";
 import { userStore } from "@src/store/userStore.ts";
 import { Chat, SubChannel } from "@src/types";
 import { useChats } from "@src/hooks/reactQueries/useChats.ts";

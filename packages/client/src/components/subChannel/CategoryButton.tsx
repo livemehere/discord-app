@@ -15,9 +15,7 @@ export const CategoryButton: FC<
       css={css`
         display: flex;
         align-items: center;
-        :hover {
-          color: var(--text-active);
-        }
+
         svg {
           width: 12px;
           height: 12px;

@@ -1,7 +1,7 @@
 import { Layout } from "@src/components/Layout.tsx";
-import { SideBar } from "@src/components/SideBar.tsx";
-import { SubSideBar } from "@src/components/SubSideBar.tsx";
-import { ChatContainer } from "@src/components/ChatContainer.tsx";
+import { SideBar } from "@src/components/channel/SideBar.tsx";
+import { SubSideBar } from "@src/components/subChannel/SubSideBar.tsx";
+import { ChatContainer } from "@src/components/chat/ChatContainer.tsx";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { userStore } from "@src/store/userStore.ts";

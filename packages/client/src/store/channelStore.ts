@@ -1,33 +1,31 @@
-import { Channel, SubChannel } from "@src/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 interface State {
-  currentChannel: Channel | null;
-  currentSubChannel: SubChannel | null;
+  currentChannelId: string | null;
+  currentSubChannelId: string | null;
 }
 
 interface Actions {
-  setChannel: (channel: Channel) => void;
-  setSubChannel: (subChannel: SubChannel) => void;
+  setChannelId: (channel: string) => void;
+  setSubChannelId: (subChannel: string) => void;
 }
 
 export const channelStore = create<State & Actions>()(
   devtools(
     (set) => ({
-      currentChannel: null,
-      currentSubChannel: null,
-      setChannel: (channel) =>
+      currentChannelId: null,
+      currentSubChannelId: null,
+      setChannelId: (id) =>
         set(
           {
-            currentChannel: channel,
-            currentSubChannel: channel.subChannels[0],
+            currentChannelId: id,
           },
           false,
           "setChannel",
         ),
-      setSubChannel: (subChannel) =>
-        set({ currentSubChannel: subChannel }, false, "setSubChannel"),
+      setSubChannelId: (id) =>
+        set({ currentSubChannelId: id }, false, "setSubChannel"),
     }),
     { name: "channelStore" },
   ),

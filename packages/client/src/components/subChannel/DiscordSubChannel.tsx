@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import { FC, ReactNode } from "react";
-
 import { SubChannel } from "@src/types";
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
   active: boolean;
   highLight: boolean;
   onClick?: (subChannel: SubChannel) => void;
-  icon: ReactNode;
+  icon?: ReactNode;
 }
 
 export const DiscordSubChannel: FC<Props> = ({

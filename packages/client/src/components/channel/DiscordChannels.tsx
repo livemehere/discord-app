@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { DiscordSideButton } from "@src/components/DiscordSideButton.tsx";
+import { DiscordSideButton } from "@src/components/channel/DiscordSideButton.tsx";
 import { css } from "@emotion/react";
 import { Channel } from "@src/types";
 import AddIcon from "@src/assets/svg/add.svg";
@@ -8,7 +8,7 @@ import { CreateChannelModalContent } from "@src/components/modals/CreateChannelM
 
 interface Props {
   list?: Channel[];
-  value: Channel | null;
+  value?: Channel | null;
   onChange: (channel: Channel) => void;
 }
 

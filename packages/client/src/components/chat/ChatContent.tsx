@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { forwardRef } from "react";
 import SharpIcon from "@src/assets/svg/sharp.svg";
-import { DefaultChatContent } from "@src/components/DefaultChatContent.tsx";
-import { ChatItem } from "@src/components/ChatItem.tsx";
+import { DefaultChatContent } from "@src/components/chat/DefaultChatContent.tsx";
+import { ChatItem } from "@src/components/chat/ChatItem.tsx";
 import { Chat, SubChannel } from "@src/types";
 import { InfiniteData } from "@tanstack/react-query";
 

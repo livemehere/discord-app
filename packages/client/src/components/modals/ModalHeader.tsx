@@ -23,6 +23,9 @@ export const ModalHeader: FC<Props> = ({ close, title, desc }) => {
           display: flex;
           justify-content: end;
           padding: 12px 8px 0 12px;
+          svg path {
+            fill: var(--text-muted);
+          }
         `}
       >
         <button onClick={close}>
@@ -43,6 +46,7 @@ export const ModalHeader: FC<Props> = ({ close, title, desc }) => {
         css={css`
           color: var(--text-muted);
           padding: 6px 12px;
+          font-size: 12px;
         `}
       >
         {desc}

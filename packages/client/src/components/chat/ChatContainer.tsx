@@ -1,10 +1,17 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { channelStore } from "@src/store/channelStore.ts";
-import { DiscordChat } from "@src/components/Chat.tsx";
+import { DiscordChat } from "@src/components/chat/Chat.tsx";
+import { useChannels } from "@src/hooks/reactQueries/useChannels.ts";
 
 export const ChatContainer: FC = () => {
-  const { currentSubChannel } = channelStore();
+  const { currentSubChannelId, currentChannelId } = channelStore();
+  const { getChannelById, getSubChannelById } = useChannels();
+  const currentChannel = getChannelById(currentChannelId);
+  const currentSubChannel = getSubChannelById(
+    currentSubChannelId,
+    currentChannel,
+  );
 
   return (
     <div
