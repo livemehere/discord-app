@@ -7,11 +7,12 @@ import { Chat, SubChannel } from "@src/types";
 
 interface Props {
   value: SubChannel;
+  prevChats: Chat[];
   chats: Chat[];
 }
 
 export const ChatContent = forwardRef<HTMLDivElement, Props>(
-  ({ value, chats }, ref) => {
+  ({ value, prevChats, chats }, ref) => {
     return (
       <section
         ref={ref}
@@ -32,6 +33,9 @@ export const ChatContent = forwardRef<HTMLDivElement, Props>(
             title={value.name}
             description={value.description}
           />
+          {prevChats.map((chat) => (
+            <ChatItem key={chat.id} chat={chat} />
+          ))}
           {chats.map((chat) => (
             <ChatItem key={chat.id} chat={chat} />
           ))}

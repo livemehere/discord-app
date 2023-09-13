@@ -21,7 +21,7 @@ export const getChats = ({
   subChannelId,
   lastId,
   size = 20,
-  sort = "asc",
+  sort = "desc",
 }: {
   subChannelId: string;
   lastId?: string;

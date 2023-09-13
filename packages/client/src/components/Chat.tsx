@@ -7,6 +7,7 @@ import { css } from "@emotion/react";
 import { PopUpChat } from "@src/components/PopUpChat.tsx";
 import { userStore } from "@src/store/userStore.ts";
 import { Chat, SubChannel } from "@src/types";
+import { useChats } from "@src/hooks/reactQueries/useChats.ts";
 
 interface Props {
   subChannel: SubChannel;
@@ -18,6 +19,11 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
   const [chats, setChats] = useState<Chat[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [popUpLastMessage, setPopUpLastMessage] = useState(false);
+
+  const { data: prevChats } = useChats({
+    subChannelId: subChannel.id,
+    lastId: undefined,
+  });
 
   const getScrollRatio = (ref: RefObject<HTMLDivElement>) => {
     const el = ref.current;
@@ -98,6 +104,11 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!prevChats) return;
+    scrollBottom();
+  }, [prevChats]);
+
   return (
     <div
       css={css`
@@ -105,7 +116,12 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
       `}
     >
       <ChatHeader value={subChannel} />
-      <ChatContent value={subChannel} chats={chats} ref={containerRef} />
+      <ChatContent
+        value={subChannel}
+        prevChats={prevChats ?? []}
+        chats={chats}
+        ref={containerRef}
+      />
       {popUpLastMessage && (
         <PopUpChat
           chat={chats[chats.length - 1]}
