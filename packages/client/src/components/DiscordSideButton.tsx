@@ -1,15 +1,14 @@
 import { css } from "@emotion/react";
-import { FC, HTMLAttributes } from "react";
-import { Channel } from "@src/types";
+import { FC, HTMLAttributes, ReactNode } from "react";
 
 interface Props {
-  channel: Channel;
-  active: boolean;
+  active?: boolean;
+  children: ReactNode;
 }
 
-export const DiscordChannel: FC<Props & HTMLAttributes<HTMLDivElement>> = ({
-  channel,
-  active,
+export const DiscordSideButton: FC<Props & HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  active = false,
   ...rest
 }) => {
   return (
@@ -26,7 +25,7 @@ export const DiscordChannel: FC<Props & HTMLAttributes<HTMLDivElement>> = ({
           border-radius: 50%;
           margin-left: auto;
           margin-right: auto;
-          margin-bottom: 8px;
+          margin-bottom: 12px;
           transition: all 250ms;
           cursor: pointer;
           ${active &&
@@ -35,13 +34,20 @@ export const DiscordChannel: FC<Props & HTMLAttributes<HTMLDivElement>> = ({
             background: var(--green-color);
           `}
 
+          svg path {
+            fill: var(--green-color);
+          }
+
           :hover {
             border-radius: 12px;
             background: var(--green-color);
+            svg path {
+              fill: #fff;
+            }
           }
         `}
       >
-        <h2>{channel.name.slice(0, 1)}</h2>
+        {children}
       </div>
     </div>
   );

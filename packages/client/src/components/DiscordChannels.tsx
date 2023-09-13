@@ -1,7 +1,8 @@
 import { FC } from "react";
-import { DiscordChannel } from "@src/components/DiscordChannel.tsx";
+import { DiscordSideButton } from "@src/components/DiscordSideButton.tsx";
 import { css } from "@emotion/react";
 import { Channel } from "@src/types";
+import AddIcon from "@src/assets/svg/add.svg";
 
 interface Props {
   list?: Channel[];
@@ -18,13 +19,17 @@ export const DiscordChannels: FC<Props> = ({ list, onChange, value }) => {
       `}
     >
       {list?.map((channel) => (
-        <DiscordChannel
+        <DiscordSideButton
           key={channel.id}
-          channel={channel}
           active={value?.id === channel.id}
           onClick={() => onChange(channel)}
-        />
+        >
+          <h2>{channel.name.slice(0, 1)}</h2>
+        </DiscordSideButton>
       ))}
+      <DiscordSideButton onClick={() => alert("생성")}>
+        <AddIcon />
+      </DiscordSideButton>
     </nav>
   );
 };
