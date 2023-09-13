@@ -18,7 +18,14 @@ export const channelStore = create<State & Actions>()(
       currentChannel: null,
       currentSubChannel: null,
       setChannel: (channel) =>
-        set({ currentChannel: channel }, false, "setChannel"),
+        set(
+          {
+            currentChannel: channel,
+            currentSubChannel: channel.subChannels[0],
+          },
+          false,
+          "setChannel",
+        ),
       setSubChannel: (subChannel) =>
         set({ currentSubChannel: subChannel }, false, "setSubChannel"),
     }),
