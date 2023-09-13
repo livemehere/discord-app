@@ -17,6 +17,19 @@ export const getChannels = (userId: string) =>
     .get<Channel[]>(`/api/users/${userId}/channels`)
     .then((res) => res.data);
 
+export const createChannel = ({
+  name,
+  description,
+  moderatorId,
+}: {
+  name: string;
+  description: string;
+  moderatorId: string;
+}) =>
+  instance
+    .post<Channel>("api/channels", { name, description, moderatorId })
+    .then((res) => res.data);
+
 export const getChats = ({
   subChannelId,
   lastId,
