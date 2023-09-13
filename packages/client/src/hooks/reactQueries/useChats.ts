@@ -1,13 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getChats } from "@src/api";
 
 interface Options {
   subChannelId: string;
-  lastId?: string;
 }
 
-export const useChats = ({ subChannelId, lastId }: Options) => {
-  return useQuery(["chats", subChannelId, lastId], () =>
-    getChats({ subChannelId, lastId }).then((res) => [...res].reverse()),
+export const useChats = ({ subChannelId }: Options) => {
+  return useInfiniteQuery(
+    ["chats", subChannelId],
+    (nextPageParam) => {
+      return getChats({ subChannelId, lastId: nextPageParam.pageParam });
+    },
+    {
+      select: (data) => {
+        return {
+          pages: [...data.pages.map((page) => [...page].reverse())].reverse(),
+          pageParams: data.pageParams,
+        };
+      },
+      getNextPageParam: (lastPage) => {
+        return lastPage[lastPage.length - 1]?.id;
+      },
+    },
   );
 };

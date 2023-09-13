@@ -19,10 +19,15 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
   const [chats, setChats] = useState<Chat[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [popUpLastMessage, setPopUpLastMessage] = useState(false);
+  const [isPrevChatLoaded, setIsPrevChatLoaded] = useState(false);
 
-  const { data: prevChats } = useChats({
+  const {
+    data: prevChats,
+    fetchNextPage,
+    isFetching,
+    hasNextPage,
+  } = useChats({
     subChannelId: subChannel.id,
-    lastId: undefined,
   });
 
   const getScrollRatio = (ref: RefObject<HTMLDivElement>) => {
@@ -45,6 +50,14 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
         top: containerRef.current?.scrollHeight,
       });
     }, 100);
+  };
+
+  const scrollBottomImmediately = () => {
+    const container = containerRef.current;
+    if (!container) return;
+    container.scrollBy({
+      top: 100,
+    });
   };
 
   const handleSubmit = (value: string) => {
@@ -76,7 +89,6 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
       ) {
         scrollBottom();
       } else {
-        console.log(chat);
         setPopUpLastMessage(true);
       }
     });
@@ -92,8 +104,16 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     if (!container) return;
 
     const handler = () => {
-      if (getScrollRatio(containerRef) > 1) {
+      const ratio = getScrollRatio(containerRef);
+      if (ratio > 1) {
         setPopUpLastMessage(false);
+      }
+      // 스크롤을 올려 절반 이상이면 이전 채팅 20개 패칭
+      if (ratio < 0.5 && isPrevChatLoaded && !isFetching) {
+        fetchNextPage();
+        if (hasNextPage) {
+          scrollBottomImmediately();
+        }
       }
     };
 
@@ -102,11 +122,17 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     return () => {
       container.removeEventListener("scroll", handler);
     };
-  }, []);
+  }, [isPrevChatLoaded, isFetching]);
 
   useEffect(() => {
     if (!prevChats) return;
-    scrollBottom();
+    if (!isPrevChatLoaded) {
+      // 최초 자동 loaded 시에만 하단으로 스크롤
+      scrollBottom();
+    }
+    setTimeout(() => {
+      setIsPrevChatLoaded(true);
+    }, 1000);
   }, [prevChats]);
 
   return (
@@ -118,9 +144,10 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
       <ChatHeader value={subChannel} />
       <ChatContent
         value={subChannel}
-        prevChats={prevChats ?? []}
+        prevChats={prevChats}
         chats={chats}
         ref={containerRef}
+        showDefaultChatContent={hasNextPage === false}
       />
       {popUpLastMessage && (
         <PopUpChat

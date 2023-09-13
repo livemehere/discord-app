@@ -4,15 +4,17 @@ import SharpIcon from "@src/assets/svg/sharp.svg";
 import { DefaultChatContent } from "@src/components/DefaultChatContent.tsx";
 import { ChatItem } from "@src/components/ChatItem.tsx";
 import { Chat, SubChannel } from "@src/types";
+import { InfiniteData } from "@tanstack/react-query";
 
 interface Props {
   value: SubChannel;
-  prevChats: Chat[];
+  prevChats?: InfiniteData<Chat[]>;
   chats: Chat[];
+  showDefaultChatContent: boolean;
 }
 
 export const ChatContent = forwardRef<HTMLDivElement, Props>(
-  ({ value, prevChats, chats }, ref) => {
+  ({ showDefaultChatContent, value, prevChats, chats }, ref) => {
     return (
       <section
         ref={ref}
@@ -28,14 +30,17 @@ export const ChatContent = forwardRef<HTMLDivElement, Props>(
             padding-top: 40px;
           `}
         >
-          <DefaultChatContent
-            icon={<SharpIcon />}
-            title={value.name}
-            description={value.description}
-          />
-          {prevChats.map((chat) => (
-            <ChatItem key={chat.id} chat={chat} />
-          ))}
+          {showDefaultChatContent && (
+            <DefaultChatContent
+              icon={<SharpIcon />}
+              title={value.name}
+              description={value.description}
+            />
+          )}
+          {prevChats?.pages.map((page) =>
+            page.map((chat) => <ChatItem key={chat.id} chat={chat} />),
+          )}
+
           {chats.map((chat) => (
             <ChatItem key={chat.id} chat={chat} />
           ))}
