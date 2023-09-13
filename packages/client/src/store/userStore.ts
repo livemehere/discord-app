@@ -1,25 +1,21 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { devtools } from "zustand/middleware";
+import { User } from "@src/types";
 
 interface State {
-  token: string | null;
+  user: User | null;
 }
 
 interface Actions {
-  setToken: (token: string) => void;
+  setUser: (user: User) => void;
 }
 
 export const userStore = create<State & Actions>()(
   devtools(
-    persist(
-      (set) => ({
-        token: null,
-        setToken: (token) => set({ token }, false, "setToken"),
-      }),
-      { name: "userStore" },
-    ),
-    {
-      name: "userStore",
-    },
+    (set) => ({
+      user: null,
+      setUser: (user) => set({ user }, false, "setUser"),
+    }),
+    { name: "userStore" },
   ),
 );

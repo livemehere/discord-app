@@ -4,38 +4,54 @@ import { io, Socket } from "socket.io-client";
 interface SocketProviderProps {
   children: ReactNode;
   url: string;
-  fallback?: ReactNode;
 }
 
 interface SocketContextValue {
   socket?: Socket;
   connected: boolean;
-  login: (token: string) => void;
+  connect: (userId: string) => void;
+  join: (rooms: string | string[]) => void;
+  leave: (room: string) => void;
+  emit: <T>(event: string, data: T) => void;
 }
 
 export const SocketContext = createContext<SocketContextValue>({
   socket: undefined,
   connected: false,
-  login: () => {},
+  connect: () => {},
+  join: () => {},
+  leave: () => {},
+  emit: () => {},
 });
 
-export const SocketProvider: FC<SocketProviderProps> = ({
-  children,
-  url,
-  fallback = null,
-}) => {
+export const SocketProvider: FC<SocketProviderProps> = ({ children, url }) => {
   const [socket, setSocket] = useState<Socket>();
   const [connected, setConnected] = useState(false);
 
-  const login = (token: string) => {
-    if (!socket) return;
-    socket.emit("login", token);
+  const connect = (userId: string) => {
+    if (socket) return;
+    const client = io(url, {
+      auth: {
+        token: userId,
+      },
+    });
+    setSocket(client);
   };
 
-  useEffect(() => {
-    const socket = io(url);
-    setSocket(socket);
-  }, [url]);
+  const join = (rooms: string | string[]) => {
+    if (!socket) return;
+    socket.emit("join", Array.isArray(rooms) ? rooms : [rooms]);
+  };
+
+  const leave = (room: string) => {
+    if (!socket) return;
+    socket.emit("leave", room);
+  };
+
+  const emit = <T = any,>(event: string, data: T) => {
+    if (!socket) return;
+    socket.emit(event, data);
+  };
 
   useEffect(() => {
     if (!socket) return;
@@ -55,8 +71,10 @@ export const SocketProvider: FC<SocketProviderProps> = ({
   }, [socket]);
 
   return (
-    <SocketContext.Provider value={{ socket, connected, login }}>
-      {socket ? children : fallback}
+    <SocketContext.Provider
+      value={{ socket, connected, connect, join, leave, emit }}
+    >
+      {children}
     </SocketContext.Provider>
   );
 };

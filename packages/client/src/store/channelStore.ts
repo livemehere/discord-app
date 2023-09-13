@@ -1,6 +1,6 @@
+import { Channel, SubChannel } from "@src/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { Channel, SubChannel } from "@shared/types/DiscordMessage";
 
 interface State {
   currentChannel: Channel | null;

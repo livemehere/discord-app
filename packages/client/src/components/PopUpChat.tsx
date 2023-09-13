@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { Avatar } from "@src/components/Avatar.tsx";
-import { Chat } from "@shared/types/DiscordMessage";
 import { motion } from "framer-motion";
+import { Chat } from "@src/types";
 
 interface Props {
   chat: Chat;

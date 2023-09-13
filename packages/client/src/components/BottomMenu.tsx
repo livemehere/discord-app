@@ -1,15 +1,10 @@
 import { css } from "@emotion/react";
-import { FC } from "react";
-import { useMe } from "@src/hooks/reactQueries/useMe.ts";
 import { Avatar } from "@src/components/Avatar.tsx";
 import { GlobalSettingButtons } from "@src/components/GlobalSettingButtons.tsx";
-import { useSearchParams } from "react-router-dom";
+import { userStore } from "@src/store/userStore.ts";
 
-interface Props {}
-
-export const BottomMenu: FC<Props> = ({}) => {
-  const [params] = useSearchParams();
-  const { data } = useMe(params.get("token") || "unknownUser");
+export const BottomMenu = () => {
+  const { user } = userStore();
 
   return (
     <div
@@ -51,8 +46,7 @@ export const BottomMenu: FC<Props> = ({}) => {
             }
           `}
         >
-          <h4>{data?.username}</h4>
-          <p>{data?.id}</p>
+          <h4>{user?.username}</h4>
         </div>
       </div>
       <GlobalSettingButtons />

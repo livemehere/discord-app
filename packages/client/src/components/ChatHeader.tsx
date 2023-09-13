@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { DiscordSubChannel } from "@src/components/DiscordSubChannel.tsx";
-import { SubChannel } from "@shared/types/DiscordMessage";
+import { SubChannel } from "@src/types";
 
 interface Props {
   value: SubChannel;

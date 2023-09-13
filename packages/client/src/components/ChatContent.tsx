@@ -2,8 +2,8 @@ import { css } from "@emotion/react";
 import { forwardRef } from "react";
 import SharpIcon from "@src/assets/svg/sharp.svg";
 import { DefaultChatContent } from "@src/components/DefaultChatContent.tsx";
-import { Chat, SubChannel } from "@shared/types/DiscordMessage";
 import { ChatItem } from "@src/components/ChatItem.tsx";
+import { Chat, SubChannel } from "@src/types";
 
 interface Props {
   value: SubChannel;

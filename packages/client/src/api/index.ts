@@ -1,31 +1,39 @@
 import axios from "axios";
-import { Channel, Chat } from "@shared/types/DiscordMessage";
-import { User } from "@shared/types/User";
+import { config } from "@src/config";
+import { Channel, Chat, User } from "@src/types";
 
-const SERVER_URL = "http://127.0.0.1:3000/api/";
 const instance = axios.create({
-  baseURL: SERVER_URL,
+  baseURL: config.SERVER_URL,
 });
 
-export const getMe = (token: string) =>
-  instance.get<User>("users/me", { params: { token } }).then((res) => res.data);
+export const signUp = (username: string) =>
+  instance.post<User>("/api/users", { username }).then((res) => res.data);
 
-export const getChannels = () =>
+export const getUserByName = (username: string) =>
+  instance.get<User>(`/api/users/username/${username}`).then((res) => res.data);
+
+export const getChannels = (userId: string) =>
   instance
-    .get<{ channels: Channel[] }>("users/channels")
+    .get<Channel[]>(`/api/users/${userId}/channels`)
     .then((res) => res.data);
 
 export const getChats = ({
-  channelId,
-  lastChatId,
+  subChannelId,
+  lastId,
+  size = 20,
+  sort = "asc",
 }: {
-  channelId: number;
-  lastChatId?: number;
+  subChannelId: string;
+  lastId?: string;
+  size?: number;
+  sort?: "desc" | "asc";
 }) =>
   instance
-    .get<{ chats: Chat[] }>(`channels/${channelId}/chats`, {
+    .get<Chat[]>(`/api/chats/${subChannelId}`, {
       params: {
-        lastChatId,
+        lastId,
+        size,
+        sort,
       },
     })
     .then((res) => res.data);

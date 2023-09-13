@@ -6,27 +6,45 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { userStore } from "@src/store/userStore.ts";
 import { useSocket } from "@src/providers/socketProviders/hooks/useSocket.ts";
+import { getUserByName, signUp } from "@src/api";
 
 export function Home() {
-  const { setToken, token } = userStore();
+  const { user, setUser } = userStore();
   const [params] = useSearchParams();
-  const { login } = useSocket();
+  const { connect, join, connected } = useSocket();
 
-  // 1.임시로 URL 로 토큰 자유롭게 생성
+  // 1.url 로 username 입력받음
   useEffect(() => {
-    const tokenFromUrl = params.get("token");
-    if (!tokenFromUrl) {
-      console.log("토큰이없습니다", tokenFromUrl);
+    const username = params.get("username");
+    if (!username) {
+      const newUsername = window.prompt("닉네임을 입력해주세요");
+      if (!newUsername) return;
+      window.location.href = `/?username=${newUsername}`;
       return;
     }
-    setToken(tokenFromUrl);
+    signUp(username)
+      .then((user) => {
+        setUser(user);
+      })
+      .catch(() => {
+        getUserByName(username).then((user) => {
+          setUser(user);
+        });
+      });
   }, []);
 
-  // 2.토큰 저장되면 socket login
+  // 2.유저 로그인 되면 소켓 연결
   useEffect(() => {
-    if (!token) return;
-    login(token);
-  }, [token]);
+    if (!user) return;
+    connect(user.id);
+  }, [user]);
+
+  // 3. 소켓 연결되면 'all' 방 연결
+  useEffect(() => {
+    if (connected) {
+      join("all");
+    }
+  }, [connected]);
 
   return (
     <Layout>

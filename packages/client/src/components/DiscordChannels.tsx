@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { Channel } from "@shared/types/DiscordMessage";
 import { DiscordChannel } from "@src/components/DiscordChannel.tsx";
 import { css } from "@emotion/react";
+import { Channel } from "@src/types";
 
 interface Props {
-  list: Channel[];
+  list?: Channel[];
   value: Channel | null;
   onChange: (channel: Channel) => void;
 }
@@ -17,7 +17,7 @@ export const DiscordChannels: FC<Props> = ({ list, onChange, value }) => {
         width: 72px;
       `}
     >
-      {list.map((channel) => (
+      {list?.map((channel) => (
         <DiscordChannel
           key={channel.id}
           channel={channel}

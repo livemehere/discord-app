@@ -2,12 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getChats } from "@src/api";
 
 interface Options {
-  channelId: number;
-  lastChatId: number;
+  subChannelId: string;
+  lastId: string;
 }
 
-export const useChats = ({ channelId, lastChatId }: Options) => {
-  return useQuery(["chats", channelId, lastChatId], () =>
-    getChats({ channelId, lastChatId }),
+export const useChats = ({ subChannelId, lastId }: Options) => {
+  return useQuery(["chats", subChannelId, lastId], () =>
+    getChats({ subChannelId, lastId }),
   );
 };

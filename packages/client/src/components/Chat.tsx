@@ -2,11 +2,11 @@ import { FC, RefObject, useEffect, useRef, useState } from "react";
 import { ChatContent } from "@src/components/ChatContent.tsx";
 import { ChatForm } from "@src/components/ChatForm.tsx";
 import { ChatHeader } from "@src/components/ChatHeader.tsx";
-import { Chat, SubChannel } from "@shared/types/DiscordMessage";
 import { useSocket } from "@src/providers/socketProviders/hooks/useSocket.ts";
 import { css } from "@emotion/react";
 import { PopUpChat } from "@src/components/PopUpChat.tsx";
 import { userStore } from "@src/store/userStore.ts";
+import { Chat, SubChannel } from "@src/types";
 
 interface Props {
   subChannel: SubChannel;
@@ -14,7 +14,7 @@ interface Props {
 
 export const DiscordChat: FC<Props> = ({ subChannel }) => {
   const { socket } = useSocket();
-  const { token } = userStore();
+  const { user } = userStore();
   const [chats, setChats] = useState<Chat[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [popUpLastMessage, setPopUpLastMessage] = useState(false);
@@ -44,14 +44,12 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
   const handleSubmit = (value: string) => {
     if (!socket) return;
 
-    const newChat: Chat = {
-      id: Date.now().toString(),
-      userId: token || "unknown",
+    const newChat = {
+      userId: user?.id,
       body: value,
-      createdAt: Date.now(),
       subChannelId: subChannel.id,
     };
-    socket.emit("message", newChat);
+    socket.emit("chat", newChat);
     scrollBottom();
   };
 
@@ -62,9 +60,8 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
   useEffect(() => {
     if (!socket) return;
 
-    socket.emit("join", subChannel.id.toString());
-
-    socket.on("message", (chat: Chat) => {
+    socket.emit("join", subChannel.id);
+    socket.on("chat", (chat: Chat) => {
       setChats((prev) => [...prev, chat]);
 
       if (
@@ -80,8 +77,7 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
 
     return () => {
       socket.emit("leave", subChannel.id);
-      socket.off("join");
-      socket.off("message");
+      socket.off("chat");
     };
   }, [socket, subChannel]);
 

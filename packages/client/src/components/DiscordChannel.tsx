@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { FC, HTMLAttributes } from "react";
-import { Channel } from "@shared/types/DiscordMessage";
+import { Channel } from "@src/types";
 
 interface Props {
   channel: Channel;
