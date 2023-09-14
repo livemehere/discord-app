@@ -49,6 +49,7 @@ export const SideMenuItem: FC<Props> = ({
         ${active &&
         css`
           background-color: ${activeColor};
+          cursor: default;
           span {
             color: white;
           }

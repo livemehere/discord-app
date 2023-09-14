@@ -4,6 +4,7 @@ import { SubSideBar } from "@src/components/common/SubSideBar/SubSideBar.tsx";
 import { SubSideBarTitle } from "@src/components/common/SubSideBar/SubSideBarTitle.tsx";
 import { SideMenuItem } from "@src/components/common/SideMenuItem.tsx";
 import ExploreIcon from "@src/assets/svg/explore.svg";
+import { css } from "@emotion/react";
 
 interface Props {}
 
@@ -20,17 +21,23 @@ export const GuildDiscovery: FC<Props> = ({}) => {
     <Layout>
       <SubSideBar>
         <SubSideBarTitle>서버 찾기</SubSideBarTitle>
-        {menuItems.map((item) => (
-          <SideMenuItem
-            key={item.name}
-            icon={item.icon}
-            hoverAction={activeMenu.name !== item.name}
-            active={activeMenu.name === item.name}
-            onClick={() => setActiveMenu(item)}
-          >
-            {item.name}
-          </SideMenuItem>
-        ))}
+        {menuItems.map((item) => {
+          const isActive = activeMenu.name === item.name;
+          return (
+            <SideMenuItem
+              key={item.name}
+              icon={item.icon}
+              hoverAction={isActive}
+              active={isActive}
+              onClick={() => setActiveMenu(item)}
+              css={css`
+                padding: 8px 4px;
+              `}
+            >
+              {item.name}
+            </SideMenuItem>
+          );
+        })}
       </SubSideBar>
     </Layout>
   );
