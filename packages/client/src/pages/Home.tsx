@@ -9,6 +9,7 @@ import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { getUserByName, signUp } from "@src/api";
 import { channelStore } from "@src/store/channelStore.ts";
 import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
+import { OnlineMemberList } from "@src/components/onlineMembers/OnlineMemberList.tsx";
 
 export function Home() {
   const { user, setUser } = userStore();
@@ -59,6 +60,7 @@ export function Home() {
       <SideBar />
       <SubSideBar />
       <ChatContainer />
+      <OnlineMemberList />
     </Layout>
   );
 }

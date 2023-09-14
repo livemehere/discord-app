@@ -18,12 +18,14 @@ export const SideBar: FC<Props> = ({}) => {
   const { join, leave } = useSocket();
 
   const handleChange = (channel: Channel) => {
+    const channelRoom = channel.id + "-channel";
+    const currentChannelRoom = currentChannel?.id + "-channel";
     // 이전 채널에서 나가고 새로운 채널에 들어감
     if (currentChannel) {
-      leave(currentChannel.id);
+      leave(currentChannelRoom);
     }
     setChannelId(channel.id);
-    join(channel.id + "-channel");
+    join(channelRoom);
 
     // 채널을 선택하면 가장 첫번째 텍스트 채널을 선택함
     setSubChannelId(channel.subChannels.find((sub) => sub.type === "TEXT")!.id);

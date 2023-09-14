@@ -12,6 +12,9 @@ export const signUp = (username: string) =>
 export const getUserByName = (username: string) =>
   instance.get<User>(`/api/users/username/${username}`).then((res) => res.data);
 
+export const getUserById = (userId: string) =>
+  instance.get<User>(`/api/users/${userId}`).then((res) => res.data);
+
 export const getChannels = (userId: string) =>
   instance
     .get<Channel[]>(`/api/users/${userId}/channels`)
