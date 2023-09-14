@@ -3,8 +3,10 @@ import { DiscordSideButton } from "@src/components/channel/DiscordSideButton.tsx
 import { css } from "@emotion/react";
 import { Channel } from "@src/types";
 import AddIcon from "@src/assets/svg/add.svg";
+import ExploreIcon from "@src/assets/svg/explore.svg";
 import { useModal } from "@src/providers/ModalProvider/hook.ts";
 import { CreateChannelModalContent } from "@src/components/modals/CreateChannelModalContent.tsx";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   list?: Channel[];
@@ -14,6 +16,7 @@ interface Props {
 
 export const DiscordChannels: FC<Props> = ({ list, onChange, value }) => {
   const { pushModal, closeModal } = useModal();
+  const navigate = useNavigate();
 
   const handleCreateChannel = () => {
     const key = pushModal(
@@ -39,6 +42,9 @@ export const DiscordChannels: FC<Props> = ({ list, onChange, value }) => {
       ))}
       <DiscordSideButton onClick={handleCreateChannel}>
         <AddIcon />
+      </DiscordSideButton>
+      <DiscordSideButton onClick={() => navigate("guild-discovery")}>
+        <ExploreIcon />
       </DiscordSideButton>
     </nav>
   );

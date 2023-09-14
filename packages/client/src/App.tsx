@@ -5,6 +5,7 @@ import { Home } from "@src/pages/Home.tsx";
 import { config } from "@src/config";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ModalProvider } from "@src/providers/ModalProvider/Provider.tsx";
+import { GuildDiscovery } from "@src/pages/GuildDiscovery.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path={"/"} element={<Home />} />
+              <Route path={"/guild-discovery"} element={<GuildDiscovery />} />
             </Routes>
           </BrowserRouter>
         </SocketProvider>

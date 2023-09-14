@@ -6,6 +6,7 @@ import { DiscordChannels } from "@src/components/channel/DiscordChannels.tsx";
 import { userStore } from "@src/store/userStore.ts";
 import { Channel } from "@src/types";
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
+import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
@@ -16,8 +17,10 @@ export const SideBar: FC<Props> = ({}) => {
   const { getChannelById } = useChannels(user?.id);
   const currentChannel = getChannelById(currentChannelId);
   const { join, leave } = useSocket();
+  const navigate = useNavigate();
 
   const handleChange = (channel: Channel) => {
+    navigate("/");
     const channelRoom = channel.id + "-channel";
     const currentChannelRoom = currentChannel?.id + "-channel";
     // 이전 채널에서 나가고 새로운 채널에 들어감

@@ -4,8 +4,9 @@ import { channelStore } from "@src/store/channelStore.ts";
 import { BottomMenu } from "@src/components/subChannel/BottomMenu.tsx";
 import { useChannels } from "@src/hooks/reactQueries/useChannels.ts";
 import { userStore } from "@src/store/userStore.ts";
+import { SubSideBar } from "@src/components/common/SubSideBar/SubSideBar.tsx";
 
-export const SubSideBar = () => {
+export const SubChannelSideBar = () => {
   const { currentChannelId, setSubChannelId, currentSubChannelId } =
     channelStore();
   const { user } = userStore();
@@ -17,13 +18,7 @@ export const SubSideBar = () => {
   );
 
   return (
-    <div
-      css={css`
-        position: relative;
-        width: 240px;
-        background-color: var(--background-200);
-      `}
-    >
+    <SubSideBar>
       <h3
         css={css`
           padding: 13.8px;
@@ -38,6 +33,6 @@ export const SubSideBar = () => {
         onChange={(subChannel) => setSubChannelId(subChannel.id)}
       />
       <BottomMenu />
-    </div>
+    </SubSideBar>
   );
 };

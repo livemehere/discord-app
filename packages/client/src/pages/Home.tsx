@@ -1,41 +1,27 @@
-import { Layout } from "@src/components/Layout.tsx";
-import { SideBar } from "@src/components/channel/SideBar.tsx";
-import { SubSideBar } from "@src/components/subChannel/SubSideBar.tsx";
+import { SubChannelSideBar } from "@src/components/subChannel/SubChannelSideBar.tsx";
 import { ChatContainer } from "@src/components/chat/ChatContainer.tsx";
-import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { userStore } from "@src/store/userStore.ts";
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
-import { getUserByName, signUp } from "@src/api";
 import { channelStore } from "@src/store/channelStore.ts";
 import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
 import { OnlineMemberList } from "@src/components/onlineMembers/OnlineMemberList.tsx";
+import { Layout } from "@src/components/Layout";
+import { useModal } from "@src/providers/ModalProvider/hook.ts";
+import { LoginModal } from "@src/components/modals/LoginModal.tsx";
 
 export function Home() {
-  const { user, setUser } = userStore();
-  const [params] = useSearchParams();
+  const { user, login } = userStore();
   const { connect, join, connected } = useSocket();
   const { currentChannelId, setOnlineMemberIds } = channelStore();
+  const { pushModal, closeModal } = useModal();
 
   // 1.url 로 username 입력받음
   useEffect(() => {
-    const username = params.get("username");
-    if (!username) {
-      const newUsername = window.prompt("닉네임을 입력해주세요");
-      if (!newUsername) return;
-      window.location.href = `/?username=${newUsername}`;
-      return;
+    if (!login) {
+      const key = pushModal(<LoginModal close={() => closeModal(key)} />);
     }
-    signUp(username)
-      .then((user) => {
-        setUser(user);
-      })
-      .catch(() => {
-        getUserByName(username).then((user) => {
-          setUser(user);
-        });
-      });
-  }, []);
+  }, [login]);
 
   // 2.유저 로그인 되면 소켓 연결
   useEffect(() => {
@@ -57,8 +43,7 @@ export function Home() {
 
   return (
     <Layout>
-      <SideBar />
-      <SubSideBar />
+      <SubChannelSideBar />
       <ChatContainer />
       <OnlineMemberList />
     </Layout>
