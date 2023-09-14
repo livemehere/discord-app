@@ -6,12 +6,19 @@ interface Props {
   profileUrl?: string;
   size?: number;
   bgColor?: string;
+  status?: "online" | "offline";
 }
 
-export const Avatar: FC<Props> = ({ profileUrl, size = 32, bgColor }) => {
+export const Avatar: FC<Props> = ({
+  profileUrl,
+  size = 32,
+  bgColor,
+  status = "offline",
+}) => {
   return (
     <div
       css={css`
+        position: relative;
         min-width: ${size}px;
         min-height: ${size}px;
         width: ${size}px;
@@ -34,6 +41,21 @@ export const Avatar: FC<Props> = ({ profileUrl, size = 32, bgColor }) => {
       `}
     >
       {profileUrl ? <img src={profileUrl} alt="avatar" /> : <LogoIcon />}
+      {status === "online" && (
+        <div
+          css={css`
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--green);
+            bottom: -3px;
+            right: -3px;
+            border: 3px solid var(--background-100);
+            background: rgb(35, 165, 90);
+          `}
+        />
+      )}
     </div>
   );
 };

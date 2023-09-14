@@ -44,7 +44,7 @@ export const User: FC<Props> = ({ userId, online }) => {
               padding: 1px 8px;
             `}
           >
-            <Avatar size={32} />
+            <Avatar size={32} status={online ? "online" : "offline"} />
           </div>
           <span
             css={css`
