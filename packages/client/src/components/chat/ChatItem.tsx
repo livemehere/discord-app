@@ -3,12 +3,15 @@ import { FC } from "react";
 import { Avatar } from "@src/components/common/Avatar.tsx";
 import { format } from "@src/utils/time.ts";
 import { Chat } from "@src/types";
+import { useUser } from "@src/hooks/reactQueries/useUser.ts";
 
 interface Props {
   chat: Chat;
 }
 
 export const ChatItem: FC<Props> = ({ chat }) => {
+  const { user } = useUser(chat.userId);
+
   return (
     <div
       css={css`
@@ -38,7 +41,7 @@ export const ChatItem: FC<Props> = ({ chat }) => {
             }
           `}
         >
-          <h5>{chat.userId}</h5>
+          <h5>{user?.username}</h5>
           <p>{format(chat.createdAt, "YYYY.MM.DD. a H:mm")}</p>
         </div>
         <p>{chat.body}</p>
