@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const DiscordChat: FC<Props> = ({ subChannel }) => {
-  const { socket } = useSocket();
+  const { socket, join, leave } = useSocket();
   const { user } = userStore();
   const [chats, setChats] = useState<Chat[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,7 +79,7 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
   useEffect(() => {
     if (!socket) return;
 
-    socket.emit("join", subChannel.id);
+    join(subChannel.id);
     socket.on("chat", (chat: Chat) => {
       setChats((prev) => [...prev, chat]);
 
@@ -94,7 +94,7 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
     });
 
     return () => {
-      socket.emit("leave", subChannel.id);
+      leave(subChannel.id);
       socket.off("chat");
     };
   }, [socket, subChannel]);

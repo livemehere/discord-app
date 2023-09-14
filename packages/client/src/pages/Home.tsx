@@ -7,11 +7,14 @@ import { useEffect } from "react";
 import { userStore } from "@src/store/userStore.ts";
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { getUserByName, signUp } from "@src/api";
+import { channelStore } from "@src/store/channelStore.ts";
+import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
 
 export function Home() {
   const { user, setUser } = userStore();
   const [params] = useSearchParams();
   const { connect, join, connected } = useSocket();
+  const { currentChannelId, setOnlineMemberIds } = channelStore();
 
   // 1.url 로 username 입력받음
   useEffect(() => {
@@ -44,7 +47,12 @@ export function Home() {
     if (connected) {
       join("all");
     }
+    console.log(currentChannelId);
   }, [connected]);
+
+  useSocketEvent("online-members", (ids) => {
+    setOnlineMemberIds(ids);
+  });
 
   return (
     <Layout>

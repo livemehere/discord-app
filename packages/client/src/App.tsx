@@ -18,18 +18,18 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <SocketProvider url={config.SERVER_URL}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <ModalProvider>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <ModalProvider>
+        <SocketProvider url={config.SERVER_URL}>
           <BrowserRouter>
             <Routes>
               <Route path={"/"} element={<Home />} />
             </Routes>
           </BrowserRouter>
-        </ModalProvider>
-      </QueryClientProvider>
-    </SocketProvider>
+        </SocketProvider>
+      </ModalProvider>
+    </QueryClientProvider>
   );
 }
 

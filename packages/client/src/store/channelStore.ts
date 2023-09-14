@@ -4,11 +4,13 @@ import { devtools } from "zustand/middleware";
 interface State {
   currentChannelId: string | null;
   currentSubChannelId: string | null;
+  onlineMemberIds: string[];
 }
 
 interface Actions {
   setChannelId: (channel: string) => void;
   setSubChannelId: (subChannel: string) => void;
+  setOnlineMemberIds: (onlineMemberIds: string[]) => void;
 }
 
 export const channelStore = create<State & Actions>()(
@@ -16,6 +18,7 @@ export const channelStore = create<State & Actions>()(
     (set) => ({
       currentChannelId: null,
       currentSubChannelId: null,
+      onlineMemberIds: [],
       setChannelId: (id) =>
         set(
           {
@@ -26,6 +29,8 @@ export const channelStore = create<State & Actions>()(
         ),
       setSubChannelId: (id) =>
         set({ currentSubChannelId: id }, false, "setSubChannel"),
+      setOnlineMemberIds: (onlineMemberIds) =>
+        set({ onlineMemberIds }, false, "setOnlineMemberIds"),
     }),
     { name: "channelStore" },
   ),

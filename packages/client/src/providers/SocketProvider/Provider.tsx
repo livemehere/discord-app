@@ -63,8 +63,13 @@ export const SocketProvider: FC<SocketProviderProps> = ({ children, url }) => {
       setConnected(false);
     };
 
+    const onlineMemberHandler = (data: any) => {
+      console.log(data);
+    };
+
     socket.on("connect", connectHandler);
     socket.on("disconnect", disconnectHandler);
+    socket.on("onlineMember", onlineMemberHandler);
 
     return () => {
       socket.removeAllListeners();
