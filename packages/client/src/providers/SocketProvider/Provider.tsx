@@ -34,6 +34,7 @@ export const SocketProvider: FC<SocketProviderProps> = ({ children, url }) => {
       auth: {
         token: userId,
       },
+      transports: ["websocket"],
     });
     setSocket(client);
   };
