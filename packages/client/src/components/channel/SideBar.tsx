@@ -2,11 +2,15 @@ import { css } from "@emotion/react";
 import { FC } from "react";
 import { useChannels } from "@src/hooks/reactQueries/useChannels.ts";
 import { channelStore } from "@src/store/channelStore.ts";
-import { DiscordChannels } from "@src/components/channel/DiscordChannels.tsx";
 import { userStore } from "@src/store/userStore.ts";
 import { Channel } from "@src/types";
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { DiscordSideButton } from "@src/components/channel/DiscordSideButton.tsx";
+import AddIcon from "@src/assets/svg/add.svg";
+import ExploreIcon from "@src/assets/svg/explore.svg";
+import { useModal } from "@src/providers/ModalProvider/hook.ts";
+import { CreateChannelModalContent } from "@src/components/modals/CreateChannelModalContent.tsx";
 
 interface Props {}
 
@@ -18,6 +22,8 @@ export const SideBar: FC<Props> = ({}) => {
   const currentChannel = getChannelById(currentChannelId);
   const { join, leave } = useSocket();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { pushModal, closeModal } = useModal();
 
   const handleChange = (channel: Channel) => {
     navigate("/");
@@ -34,17 +40,41 @@ export const SideBar: FC<Props> = ({}) => {
     setSubChannelId(channel.subChannels.find((sub) => sub.type === "TEXT")!.id);
   };
 
+  const handleCreateChannel = () => {
+    const key = pushModal(
+      <CreateChannelModalContent close={() => closeModal(key)} />,
+    );
+  };
+
   return (
-    <div
+    <nav
       css={css`
         display: flex;
+        flex-direction: column;
+        margin-top: 12px;
+        width: 72px;
       `}
     >
-      <DiscordChannels
-        list={channels}
-        value={currentChannel}
-        onChange={handleChange}
-      />
-    </div>
+      {channels?.map((channel) => (
+        <DiscordSideButton
+          key={channel.id}
+          active={
+            location.pathname === "/" && currentChannel?.id === channel.id
+          }
+          onClick={() => handleChange(channel)}
+        >
+          <h2>{channel.name.slice(0, 1)}</h2>
+        </DiscordSideButton>
+      ))}
+      <DiscordSideButton onClick={handleCreateChannel}>
+        <AddIcon />
+      </DiscordSideButton>
+      <DiscordSideButton
+        onClick={() => navigate("guild-discovery")}
+        active={location.pathname === "/guild-discovery"}
+      >
+        <ExploreIcon />
+      </DiscordSideButton>
+    </nav>
   );
 };

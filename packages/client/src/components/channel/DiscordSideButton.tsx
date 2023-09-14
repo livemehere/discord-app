@@ -28,15 +28,17 @@ export const DiscordSideButton: FC<Props & HTMLAttributes<HTMLDivElement>> = ({
           margin-bottom: 12px;
           transition: all 250ms;
           cursor: pointer;
+          svg path {
+            fill: var(--green-color);
+          }
           ${active &&
           css`
             border-radius: 12px;
             background: var(--green-color);
+            svg path {
+              fill: #fff;
+            }
           `}
-
-          svg path {
-            fill: var(--green-color);
-          }
 
           :hover {
             border-radius: 12px;
