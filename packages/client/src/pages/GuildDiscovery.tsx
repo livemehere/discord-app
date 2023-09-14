@@ -4,7 +4,9 @@ import { SubSideBar } from "@src/components/common/SubSideBar/SubSideBar.tsx";
 import { SubSideBarTitle } from "@src/components/common/SubSideBar/SubSideBarTitle.tsx";
 import { SideMenuItem } from "@src/components/common/SideMenuItem.tsx";
 import ExploreIcon from "@src/assets/svg/explore.svg";
+import SearchIcon from "@src/assets/svg/search.svg";
 import { css } from "@emotion/react";
+import { CommonInput } from "@src/components/discovery/CommonInput.tsx";
 
 interface Props {}
 
@@ -17,6 +19,7 @@ const menuItems = [
 
 export const GuildDiscovery: FC<Props> = ({}) => {
   const [activeMenu, setActiveMenu] = useState(menuItems[0]);
+  const [search, setSearch] = useState("");
   return (
     <Layout>
       <SubSideBar>
@@ -39,6 +42,17 @@ export const GuildDiscovery: FC<Props> = ({}) => {
           );
         })}
       </SubSideBar>
+      <div>
+        <CommonInput
+          css={css`
+            width: 500px;
+          `}
+          value={search}
+          placeholder={"커뮤니티 살펴보기"}
+          onChange={(e) => setSearch(e.target.value)}
+          icon={<SearchIcon />}
+        />
+      </div>
     </Layout>
   );
 };
