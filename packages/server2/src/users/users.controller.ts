@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -19,7 +20,7 @@ export class UserController {
       const user = await this.userService.createUser(createUserDto.username);
       return user;
     } catch (e) {
-      return e;
+      throw new BadRequestException(e.name);
     }
   }
 
@@ -28,6 +29,15 @@ export class UserController {
     const user = await this.userService.getUser(userId);
     if (!user) {
       throw new NotFoundException(`존재하지 않는 유저입니다(${userId})`);
+    }
+    return user;
+  }
+
+  @Get('username/:username')
+  async getUserByName(@Param('username') username: string) {
+    const user = await this.userService.getUserByName(username);
+    if (!user) {
+      throw new NotFoundException(`존재하지 않는 유저입니다(${username})`);
     }
     return user;
   }

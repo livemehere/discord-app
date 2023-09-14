@@ -12,6 +12,14 @@ services:
     networks:
       - inner_net
 
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - inner_net
+
   server:
     build: .
     ports:

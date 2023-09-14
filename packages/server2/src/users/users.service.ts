@@ -12,6 +12,14 @@ export class UsersService {
     });
   }
 
+  getUserByName(username: string) {
+    return this.prismaService.user.findFirst({
+      where: {
+        username,
+      },
+    });
+  }
+
   createUser(username: string) {
     return this.prismaService.user.create({
       data: {

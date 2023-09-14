@@ -19,6 +19,9 @@ export class ChatsService {
     lastChatId?: string,
   ) {
     return this.prismaService.chat.findMany({
+      where: {
+        subChannelId,
+      },
       take: size,
       skip: lastChatId ? 1 : 0,
       ...(lastChatId && {
