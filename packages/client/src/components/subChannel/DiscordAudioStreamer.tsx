@@ -51,11 +51,11 @@ export const DiscordAudioStreamer: FC<Props> = ({
 
     let stopTimer: number | undefined = undefined;
     const startTimer = window.setInterval(function () {
-      console.log("start");
+      console.log("record start");
       mediaRecorder.start();
 
       stopTimer = window.setTimeout(() => {
-        console.log("stop");
+        console.log("record stop");
         mediaRecorder.stop();
       }, 490);
     }, 500);
