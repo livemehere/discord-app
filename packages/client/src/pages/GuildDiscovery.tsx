@@ -48,10 +48,18 @@ export const GuildDiscovery: FC<Props> = ({}) => {
       </SubSideBar>
       <div
         css={css`
+          padding: 32px 16px 32px 32px;
           flex: 1;
         `}
       >
         <DiscoverySearchHeader value={query} onChange={setQuery} />
+        <h3
+          css={css`
+            margin-top: 16px;
+          `}
+        >
+          검색 결과
+        </h3>
         <ul>
           {channels?.map((channel) => <li key={channel.id}>{channel.name}</li>)}
         </ul>
