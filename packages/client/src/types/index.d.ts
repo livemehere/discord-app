@@ -37,4 +37,5 @@ export interface Chat {
   updatedAt: any;
   userId: string;
   subChannelId: string;
+  channelId: string;
 }

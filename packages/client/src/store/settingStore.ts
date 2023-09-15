@@ -14,8 +14,8 @@ interface Actions {
 export const settingStore = create<State & Actions>()(
   devtools(
     (set) => ({
-      mic: true,
-      sound: true,
+      mic: false,
+      sound: false,
       setMic: (v) => set({ mic: v }, false, "setMic"),
       setSound: (v) => set({ sound: v }, false, "setSound"),
     }),

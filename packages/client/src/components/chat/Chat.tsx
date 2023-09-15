@@ -67,6 +67,7 @@ export const DiscordChat: FC<Props> = ({ subChannel }) => {
       userId: user?.id,
       body: value,
       subChannelId: subChannel.id,
+      channelId: subChannel.channelId,
     };
     socket.emit("chat", newChat);
     scrollBottom();

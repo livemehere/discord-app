@@ -9,6 +9,8 @@ import AddIcon from "@public/svg/add.svg";
 import { useModal } from "@src/providers/ModalProvider/hook.ts";
 import { CreateSubChannelModalContent } from "@src/components/modals/CreateSubChannelModalContent.tsx";
 import { SubChannel } from "@src/types";
+import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
+import { useParams } from "react-router-dom";
 
 interface Props {
   list: SubChannel[];
@@ -21,13 +23,50 @@ export const DiscordSubChannels: FC<Props> = ({ list, onChange, value }) => {
   const audioTextChannels = list.filter((l) => l.type === "AUDIO_TEXT");
   const [showTextChannel, setShowTextChannel] = useState(true);
   const [showAudioTextChannel, setShowAudioTextChannel] = useState(true);
+  const params = useParams();
+  const currentChannelId = params.channelId;
+  const currentSubChannelId = params.subChannelId;
 
   const { pushModal, closeModal } = useModal();
 
+  const [newChatSubChannelIds, setNewChatSubChannelIds] = useState<string[]>(
+    [],
+  );
+
+  const isHighLight = (subChannelId: string) => {
+    if (
+      newChatSubChannelIds.includes(subChannelId) &&
+      subChannelId !== currentSubChannelId
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  useSocketEvent("new-chat", (subChannelId) => {
+    const prev = newChatSubChannelIds;
+    prev.push(subChannelId);
+    setNewChatSubChannelIds(Array.from(new Set(prev)));
+  });
+
   const handleAddSubChannel = () => {
+    if (!currentChannelId) return;
     const key = pushModal(
-      <CreateSubChannelModalContent close={() => closeModal(key)} />,
+      <CreateSubChannelModalContent
+        close={() => closeModal(key)}
+        channelId={currentChannelId}
+      />,
     );
+  };
+
+  const handleChangeSubChannel = (subChannel: SubChannel) => {
+    onChange(subChannel);
+    const index = newChatSubChannelIds.indexOf(subChannel.id);
+    if (index !== -1) {
+      const prev = newChatSubChannelIds;
+      prev.splice(index, 1);
+      setNewChatSubChannelIds(prev);
+    }
   };
 
   return (
@@ -56,9 +95,9 @@ export const DiscordSubChannels: FC<Props> = ({ list, onChange, value }) => {
           <DiscordSubChannel
             key={subChannel.id}
             value={subChannel}
-            highLight={false}
+            highLight={isHighLight(subChannel.id)}
             active={value?.id === subChannel.id}
-            onClick={() => onChange(subChannel)}
+            onClick={() => handleChangeSubChannel(subChannel)}
             icon={<SharpIcon width={20} height={20} />}
           />
         ))}
@@ -85,7 +124,7 @@ export const DiscordSubChannels: FC<Props> = ({ list, onChange, value }) => {
             value={subChannel}
             highLight={false}
             active={value?.id === subChannel.id}
-            onClick={() => onChange(subChannel)}
+            onClick={() => handleChangeSubChannel(subChannel)}
             icon={<SpeakerIcon width={20} height={20} />}
           />
         ))}

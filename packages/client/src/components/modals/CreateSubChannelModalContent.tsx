@@ -12,13 +12,17 @@ import SharpIcon from "@public/svg/sharp.svg";
 import SpeakerIcon from "@public/svg/speaker.svg";
 import { ModalSmallTitle } from "@src/components/modals/ModalSmallTitle.tsx";
 import { SubChannel } from "@src/types";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   close: () => void;
+  channelId: string;
 }
 
-export const CreateSubChannelModalContent: FC<Props> = ({ close }) => {
+export const CreateSubChannelModalContent: FC<Props> = ({
+  close,
+  channelId,
+}) => {
   const [channelName, setChannelName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState<SubChannel["type"]>("TEXT");
@@ -27,10 +31,9 @@ export const CreateSubChannelModalContent: FC<Props> = ({ close }) => {
   const queryClient = useQueryClient();
   const { user } = userStore();
   const navigate = useNavigate();
-  const params = useParams();
-  const currentChannelId = params.channelId;
 
   const handleCreate = async () => {
+    const currentChannelId = channelId;
     if (!user || !currentChannelId) return;
     const newSubChannel = await createSubChannel(currentChannelId, {
       name: channelName,
