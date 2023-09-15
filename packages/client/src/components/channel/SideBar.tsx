@@ -12,7 +12,7 @@ import { CreateChannelModalContent } from "@src/components/modals/CreateChannelM
 
 export const SideBar = () => {
   const { user } = userStore();
-  const { data: channels } = useChannels(user?.id);
+  const { channels } = useChannels(user?.id);
 
   const params = useParams();
   const currentChannelId = params.channelId;

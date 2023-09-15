@@ -27,6 +27,7 @@ export const useChannels = (userId?: string) => {
 
   return {
     ...result,
+    channels: result.data,
     getChannelById,
     getSubChannelById,
   };

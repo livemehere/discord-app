@@ -38,6 +38,11 @@ export const createChannel = ({
     .post<Channel>("api/channels", { name, description, moderatorId })
     .then((res) => res.data);
 
+export const joinChannel = (channelId: string, userId: string) =>
+  instance
+    .post(`api/channels/${channelId}/join`, { userId })
+    .then((res) => res.data);
+
 export const createSubChannel = (
   channelId: string,
   body: { name: string; description: string; type: SubChannel["type"] },

@@ -3,14 +3,21 @@ import { FC } from "react";
 import { Channel } from "@src/types";
 import DefaultChannelCover from "@public/bg/channel-cover-default.svg?url";
 import LogoImage from "@public/logo.png?url";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   channel: Channel;
 }
 
 export const ChannelCard: FC<Props> = ({ channel }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/${channel.id}`);
+  };
+
   return (
     <div
+      onClick={handleClick}
       css={css`
         height: 320px;
         background-color: rgb(35, 36, 40);
