@@ -33,3 +33,13 @@ input{
   outline: none;
   color: $text-normal;
 }
+
+select{
+  border-radius: 4px;
+  padding: 10px;
+  background:$background-300;
+  border: none;
+  outline: none;
+  color: $text-normal;
+}
+
