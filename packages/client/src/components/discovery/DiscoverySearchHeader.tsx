@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { CommonInput } from "@src/components/common/CommonInput.tsx";
-import SearchIcon from "@public/svg/search.svg";
-import DiscoveryBg from "@public/bg/discovery-bg.svg?url";
+import SearchIcon from "@src/assets/svg/search.svg";
+import DiscoveryBg from "@src/assets/bg/discovery-bg.png";
 
 interface Props {
   value: string;

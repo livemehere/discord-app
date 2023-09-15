@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
-import LogoIcon from "@public/svg/logo.svg";
+import LogoIcon from "@src/assets/svg/logo.svg";
 
 interface Props {
   profileUrl?: string;

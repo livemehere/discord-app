@@ -1,10 +1,10 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
-import MicIcon from "@public/svg/mic.svg";
-import MicDisableIcon from "@public/svg/mic-disable.svg";
-import HeadsetIcon from "@public/svg/headset.svg";
-import HeadsetDisableIcon from "@public/svg/headset-disable.svg";
-import SettingIcon from "@public/svg/setting.svg";
+import MicIcon from "@src/assets/svg/mic.svg";
+import MicDisableIcon from "@src/assets/svg/mic-disable.svg";
+import HeadsetIcon from "@src/assets/svg/headset.svg";
+import HeadsetDisableIcon from "@src/assets/svg/headset-disable.svg";
+import SettingIcon from "@src/assets/svg/setting.svg";
 import { settingStore } from "@src/store/settingStore.ts";
 
 interface Props {}

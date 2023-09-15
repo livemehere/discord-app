@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { FC, FormEvent, useState } from "react";
-import AddIcon from "@public/svg/add.svg";
+import AddIcon from "@src/assets/svg/add.svg";
 
 interface Props {
   onSubmit: (value: string) => void;

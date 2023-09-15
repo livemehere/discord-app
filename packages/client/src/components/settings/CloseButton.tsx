@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
-import CloseIcon from "@public/svg/close.svg";
+import CloseIcon from "@src/assets/svg/close.svg";
 
 interface Props {
   onClick: () => void;
