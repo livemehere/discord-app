@@ -3,7 +3,7 @@ import { Layout } from "@src/components/Layout.tsx";
 import { SubSideBar } from "@src/components/common/SubSideBar/SubSideBar.tsx";
 import { SubSideBarTitle } from "@src/components/common/SubSideBar/SubSideBarTitle.tsx";
 import { SideMenuItem } from "@src/components/common/SideMenuItem.tsx";
-import ExploreIcon from "@src/assets/svg/explore.svg";
+import ExploreIcon from "@public/svg/explore.svg";
 import { css } from "@emotion/react";
 import { DiscoverySearchHeader } from "@src/components/discovery/DiscoverySearchHeader.tsx";
 import { useDebounceValue } from "@src/hooks/useDebounceValue.ts";

@@ -9,8 +9,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { CHANNELS_KEY } from "@src/hooks/reactQueries/useChannels.ts";
 import { channelStore } from "@src/store/channelStore.ts";
 import { ModalRadio } from "@src/components/modals/ModalRadio.tsx";
-import SharpIcon from "@src/assets/svg/sharp.svg";
-import SpeakerIcon from "@src/assets/svg/speaker.svg";
+import SharpIcon from "@public/svg/sharp.svg";
+import SpeakerIcon from "@public/svg/speaker.svg";
 import { ModalSmallTitle } from "@src/components/modals/ModalSmallTitle.tsx";
 import { SubChannel } from "@src/types";
 

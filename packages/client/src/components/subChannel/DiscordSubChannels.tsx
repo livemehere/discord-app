@@ -3,9 +3,9 @@ import { DiscordSubChannel } from "@src/components/subChannel/DiscordSubChannel.
 import { css } from "@emotion/react";
 import { CategoryList } from "@src/components/subChannel/CategoryList.tsx";
 import { CategoryButton } from "@src/components/subChannel/CategoryButton.tsx";
-import SharpIcon from "@src/assets/svg/sharp.svg";
-import SpeakerIcon from "@src/assets/svg/speaker.svg";
-import AddIcon from "@src/assets/svg/add.svg";
+import SharpIcon from "@public/svg/sharp.svg";
+import SpeakerIcon from "@public/svg/speaker.svg";
+import AddIcon from "@public/svg/add.svg";
 import { useModal } from "@src/providers/ModalProvider/hook.ts";
 import { CreateSubChannelModalContent } from "@src/components/modals/CreateSubChannelModalContent.tsx";
 import { SubChannel } from "@src/types";

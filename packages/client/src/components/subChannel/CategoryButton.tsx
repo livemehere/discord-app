@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { ButtonHTMLAttributes, FC, ReactNode } from "react";
-import ArrowDownIcon from "@src/assets/svg/arrow-down.svg";
+import ArrowDownIcon from "@public/svg/arrow-down.svg";
 
 interface Props {
   children: ReactNode;

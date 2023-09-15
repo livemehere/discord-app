@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { forwardRef } from "react";
-import SharpIcon from "@src/assets/svg/sharp.svg";
+import SharpIcon from "@public/svg/sharp.svg";
 import { DefaultChatContent } from "@src/components/chat/DefaultChatContent.tsx";
 import { ChatItem } from "@src/components/chat/ChatItem.tsx";
 import { Chat, SubChannel } from "@src/types";

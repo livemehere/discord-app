@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { Channel } from "@src/types";
-import LogoIcon from "@src/assets/svg/logo.svg?url";
+import LogoIcon from "@public/svg/logo.svg?url";
 
 interface Props {
   channel: Channel;

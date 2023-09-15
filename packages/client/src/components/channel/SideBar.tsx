@@ -7,8 +7,8 @@ import { Channel } from "@src/types";
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DiscordSideButton } from "@src/components/channel/DiscordSideButton.tsx";
-import AddIcon from "@src/assets/svg/add.svg";
-import ExploreIcon from "@src/assets/svg/explore.svg";
+import AddIcon from "@public/svg/add.svg";
+import ExploreIcon from "@public/svg/explore.svg";
 import { useModal } from "@src/providers/ModalProvider/hook.ts";
 import { CreateChannelModalContent } from "@src/components/modals/CreateChannelModalContent.tsx";
 

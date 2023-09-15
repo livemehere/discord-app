@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { CommonInput } from "@src/components/common/CommonInput.tsx";
-import SearchIcon from "@src/assets/svg/search.svg";
+import SearchIcon from "@public/svg/search.svg";
 
 interface Props {
   value: string;
