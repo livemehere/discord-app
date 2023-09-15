@@ -41,5 +41,5 @@ jobs:
           region: ${{ env.AWS_REGION }}
           version_label: ${{github.SHA}}
           deployment_package: ${{ env.APP_NAME }}.zip
-          working_directory: ${{ env.WORKING_DIRECTORY }}
+        working_directory: ${{ env.WORKING_DIRECTORY }}
 
