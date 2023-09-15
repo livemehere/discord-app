@@ -6,6 +6,8 @@ import { SubChannel } from "@src/types";
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
 import { userStore } from "@src/store/userStore.ts";
+import { channelStore } from "@src/store/channelStore.ts";
+import { User } from "../onlineMembers/User";
 
 interface Props {
   subChannel: SubChannel;
@@ -14,6 +16,10 @@ interface Props {
 export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
   const { audioDeviceId, mic, sound } = settingStore();
   const { emit } = useSocket();
+  const { onlineMembers } = channelStore();
+  const joinedMembers = onlineMembers.filter((m) =>
+    m.rooms.includes(subChannel.id),
+  );
 
   const stream = useAudioStream(audioDeviceId);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -66,11 +72,26 @@ export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
   return (
     <div
       css={css`
-        padding-left: 34px;
+        padding-left: 12px;
       `}
     >
       <audio ref={audioRef}></audio>
-      DiscordAudioStreamer
+      <div
+        css={css`
+          margin-top: 4px;
+        `}
+      >
+        {joinedMembers.map((member) => (
+          <User
+            key={member.userId}
+            userId={member.userId}
+            avatarSize={24}
+            css={css`
+              padding: 3px 0;
+            `}
+          />
+        ))}
+      </div>
     </div>
   );
 };
