@@ -38,9 +38,5 @@ export const Discord: FC<Props> = ({}) => {
       const key = pushModal(<LoginModal close={() => closeModal(key)} />);
     }
   }, [login]);
-  return (
-    <>
-      <Routes />
-    </>
-  );
+  return <Routes />;
 };
