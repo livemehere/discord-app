@@ -8,6 +8,7 @@ import { css } from "@emotion/react";
 import { DiscoverySearchHeader } from "@src/components/discovery/DiscoverySearchHeader.tsx";
 import { useDebounceValue } from "@src/hooks/useDebounceValue.ts";
 import { useSearchChannels } from "@src/hooks/reactQueries/useSearchChannels.ts";
+import { ChannelCard } from "@src/components/discovery/ChannelCard.tsx";
 
 interface Props {}
 
@@ -60,9 +61,17 @@ export const GuildDiscovery: FC<Props> = ({}) => {
         >
           검색 결과
         </h3>
-        <ul>
-          {channels?.map((channel) => <li key={channel.id}>{channel.name}</li>)}
-        </ul>
+        <div
+          css={css`
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
+            grid-gap: 16px;
+          `}
+        >
+          {channels?.map((channel) => (
+            <ChannelCard key={channel.id} channel={channel} />
+          ))}
+        </div>
       </div>
     </Layout>
   );
