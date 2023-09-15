@@ -8,6 +8,7 @@ export const ModalButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   return (
     <button
       css={css`
+        display: block;
         background: rgb(82, 94, 226);
         color: #fff;
         border-radius: 3px;

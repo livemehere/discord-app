@@ -12,8 +12,11 @@ import {
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { joinChannel } from "@src/api";
 import { useQueryClient } from "@tanstack/react-query";
+import { useModal } from "@src/providers/ModalProvider/hook.ts";
+import { WelcomeToChannelModal } from "@src/components/modals/WelcomeToChannelModal.tsx";
 
 export function Home() {
+  const { pushModal, closeModal } = useModal();
   const { user, login } = userStore();
   const { join } = useSocket();
   const { getChannelById, channels } = useChannels(user?.id);
@@ -26,6 +29,7 @@ export function Home() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    // 채널 맴버가 아니라면 자동 가입
     if (!login || !user || !currentChannelId || channels === undefined) return;
     if (isChannelMember) {
       console.log("채널 멤버입니다", user?.username);
@@ -33,7 +37,9 @@ export function Home() {
     } else {
       console.log("채널에 가입되지 않았습니다", user?.username);
       joinChannel(currentChannelId, user.id).then(() => {
-        console.log("채널에 자동 가입하였습니다");
+        const key = pushModal(
+          <WelcomeToChannelModal close={() => closeModal(key)} />,
+        );
         queryClient.invalidateQueries([CHANNELS_KEY]);
       });
     }

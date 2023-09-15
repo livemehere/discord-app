@@ -47,6 +47,7 @@ export const ModalHeader: FC<Props> = ({ close, title, desc }) => {
           color: var(--text-muted);
           padding: 6px 12px;
           font-size: 12px;
+          text-align: center;
         `}
       >
         {desc}
