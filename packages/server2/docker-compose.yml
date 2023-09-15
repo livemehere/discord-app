@@ -9,6 +9,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: kong1234
       MYSQL_DATABASE: discord
+    volumes:
+      - mysql-data:/var/lib/mysql
     networks:
       - inner_net
 
@@ -23,7 +25,7 @@ services:
   server:
     build: .
     ports:
-      - "3000:3000"
+      - "80:3000"
     networks:
       - inner_net
     depends_on:

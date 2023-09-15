@@ -8,5 +8,8 @@ export class CreateChatDto {
   body: string;
 
   @IsString()
+  channelId: string;
+
+  @IsString()
   subChannelId: string;
 }

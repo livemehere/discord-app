@@ -63,6 +63,10 @@ export class ChannelService {
       where: {
         name: { contains: q },
       },
+      include: {
+        members: true,
+        subChannels: true,
+      },
     });
   }
 }
