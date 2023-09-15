@@ -11,9 +11,13 @@ import { User } from "../onlineMembers/User";
 
 interface Props {
   subChannel: SubChannel;
+  streamOn?: boolean;
 }
 
-export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
+export const DiscordAudioStreamer: FC<Props> = ({
+  subChannel,
+  streamOn = false,
+}) => {
   const { audioDeviceId, mic, sound } = settingStore();
   const { emit } = useSocket();
   const { onlineMembers } = channelStore();
@@ -26,7 +30,7 @@ export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
   const { user } = userStore();
 
   useEffect(() => {
-    if (!stream || !user || !mic) return;
+    if (!stream || !user || !mic || !streamOn) return;
 
     let chunks: Blob[] = [];
     const mediaRecorder = new MediaRecorder(stream);
@@ -58,7 +62,7 @@ export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
       clearInterval(startTimer);
       clearTimeout(stopTimer);
     };
-  }, [emit, audioDeviceId, user, stream, mic]);
+  }, [emit, audioDeviceId, user, stream, mic, streamOn]);
 
   useSocketEvent("audio", (data) => {
     if (!sound) return;

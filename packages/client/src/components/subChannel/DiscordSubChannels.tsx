@@ -129,7 +129,10 @@ export const DiscordSubChannels: FC<Props> = ({ list, onChange, value }) => {
               icon={<SpeakerIcon width={20} height={20} />}
             />
             {subChannel.type === "AUDIO_TEXT" && (
-              <DiscordAudioStreamer subChannel={subChannel} />
+              <DiscordAudioStreamer
+                subChannel={subChannel}
+                streamOn={value?.id === subChannel.id}
+              />
             )}
           </Fragment>
         ))}
