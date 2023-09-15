@@ -18,6 +18,16 @@ export const ChannelCard: FC<Props> = ({ channel }) => {
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        :hover {
+          background-color: #1e1f22;
+          box-shadow: 0 1px 20px rgba(0, 0, 0, 0.2);
+          transform: translateY(-2px);
+          .cover-bg {
+            transform: scale(1.03);
+          }
+        }
       `}
     >
       <div
@@ -33,7 +43,14 @@ export const ChannelCard: FC<Props> = ({ channel }) => {
           }
         `}
       >
-        <img src={DefaultChannelCover} alt="" />
+        <img
+          className={"cover-bg"}
+          src={DefaultChannelCover}
+          alt=""
+          css={css`
+            transition: transform 0.2s ease-in-out;
+          `}
+        />
         <div
           className="avatar"
           css={css`

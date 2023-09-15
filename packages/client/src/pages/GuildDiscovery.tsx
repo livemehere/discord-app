@@ -51,12 +51,14 @@ export const GuildDiscovery: FC<Props> = ({}) => {
         css={css`
           padding: 32px 16px 32px 32px;
           flex: 1;
+          display: flex;
+          flex-direction: column;
         `}
       >
         <DiscoverySearchHeader value={query} onChange={setQuery} />
         <h3
           css={css`
-            margin-top: 16px;
+            margin: 16px 0;
           `}
         >
           검색 결과
@@ -66,6 +68,8 @@ export const GuildDiscovery: FC<Props> = ({}) => {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
             grid-gap: 16px;
+            flex: 1;
+            overflow-y: auto;
           `}
         >
           {channels?.map((channel) => (
