@@ -33,6 +33,7 @@ jobs:
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v14
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         with:
           aws_access_key: ${{ env.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
@@ -41,5 +42,4 @@ jobs:
           region: ${{ env.AWS_REGION }}
           version_label: ${{github.SHA}}
           deployment_package: ${{ env.APP_NAME }}.zip
-        working_directory: ${{ env.WORKING_DIRECTORY }}
 
