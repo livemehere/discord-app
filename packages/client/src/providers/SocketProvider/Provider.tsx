@@ -63,16 +63,23 @@ export const SocketProvider: FC<SocketProviderProps> = ({ children, url }) => {
       setConnected(false);
     };
 
-    const onlineMemberHandler = (data: any) => {
-      console.log(data);
-    };
-
     socket.on("connect", connectHandler);
     socket.on("disconnect", disconnectHandler);
-    socket.on("onlineMember", onlineMemberHandler);
 
     return () => {
       socket.removeAllListeners();
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    const onDisconnectHandler = () => {
+      const channelId = window.location.pathname.split("/")[1];
+      socket?.emit("leave", channelId + "-channel");
+    };
+    window.addEventListener("beforeunload", onDisconnectHandler);
+
+    return () => {
+      window.removeEventListener("beforeunload", onDisconnectHandler);
     };
   }, [socket]);
 

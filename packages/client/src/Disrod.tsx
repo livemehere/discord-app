@@ -6,12 +6,15 @@ import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
 import { channelStore } from "@src/store/channelStore.ts";
 import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
 import { LoginModal } from "@src/components/modals/LoginModal.tsx";
+import { CHANNELS_KEY } from "@src/hooks/reactQueries/useChannels.ts";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const Discord = () => {
   const { login, user } = userStore();
   const { pushModal, closeModal } = useModal();
   const { connect, join, connected } = useSocket();
   const { setOnlineMemberIds } = channelStore();
+  const queryClient = useQueryClient();
 
   // 2.유저 로그인 되면 소켓 연결
   useEffect(() => {
@@ -27,7 +30,9 @@ export const Discord = () => {
   }, [connected]);
 
   useSocketEvent("online-members", (ids) => {
+    console.log("채널 멤버들의 온라인상태가 변경되었습니다.");
     setOnlineMemberIds(ids);
+    queryClient.invalidateQueries([CHANNELS_KEY]);
   });
 
   // 1.url 로 username 입력받음
@@ -36,5 +41,6 @@ export const Discord = () => {
       const key = pushModal(<LoginModal close={() => closeModal(key)} />);
     }
   }, [login]);
+
   return <Routes />;
 };
