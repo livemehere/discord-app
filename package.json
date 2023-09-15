@@ -10,9 +10,8 @@
     ]
   },
   "scripts": {
-    "server:dev": "yarn workspace server2 start:dev",
-    "server:build": "yarn workspace server2 build",
-    "client:dev": "yarn workspace client dev",
-    "client:build": "yarn workspace client build"
+    "client:start": "yarn workspace client build && yarn workspace client preview",
+    "server:start": "yarn workspace server2 build:docker-compose && yarn workspace server2 start:docker-compose",
+    "db:migration": "yarn workspace server2 db-push"
   }
 }

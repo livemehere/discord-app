@@ -1,7 +1,12 @@
 # Discord Clone
 
-## TODO
+## How to run on local
 
-- [ ] 동시 로그인 방지
-- [ ] 배포 후 프론트 로그 제거 plugin 추가
-- [ ] 서버, redis, db 배포 환경 정리 및 환경변수 정리
+```bash
+yarn client:start # build and preview client port 4000
+yarn server:start # build with docker-compose and start docker-compose (server:80, mysql:3306, redis:6379)
+yarn db:migration # prisma migrate to localhost:3306 mysql
+```
+
+
+
