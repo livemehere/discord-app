@@ -8,9 +8,13 @@ import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEve
 import { LoginModal } from "@src/components/modals/LoginModal.tsx";
 import { CHANNELS_KEY } from "@src/hooks/reactQueries/useChannels.ts";
 import { useQueryClient } from "@tanstack/react-query";
+import { Settings } from "@src/components/settings/Settings.tsx";
+import { settingStore } from "@src/store/settingStore.ts";
+import { AnimatePresence } from "framer-motion";
 
 export const Discord = () => {
   const { login, user } = userStore();
+  const { open } = settingStore();
   const { pushModal, closeModal } = useModal();
   const { connect, join, connected } = useSocket();
   const { setOnlineMemberIds } = channelStore();
@@ -42,5 +46,10 @@ export const Discord = () => {
     }
   }, [login]);
 
-  return <Routes />;
+  return (
+    <>
+      <AnimatePresence>{open && <Settings />}</AnimatePresence>
+      <Routes />
+    </>
+  );
 };

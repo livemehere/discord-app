@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { forwardRef } from "react";
 import SharpIcon from "@public/svg/sharp.svg";
+import SpeakerIcon from "@public/svg/speaker.svg";
 import { DefaultChatContent } from "@src/components/chat/DefaultChatContent.tsx";
 import { ChatItem } from "@src/components/chat/ChatItem.tsx";
 import { Chat, SubChannel } from "@src/types";
@@ -32,7 +33,7 @@ export const ChatContent = forwardRef<HTMLDivElement, Props>(
         >
           {showDefaultChatContent && (
             <DefaultChatContent
-              icon={<SharpIcon />}
+              icon={value.type === "TEXT" ? <SharpIcon /> : <SpeakerIcon />}
               title={value.name}
               description={value.description}
             />
