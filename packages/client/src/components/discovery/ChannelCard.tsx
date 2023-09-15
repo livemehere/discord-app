@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { FC } from "react";
 import { Channel } from "@src/types";
 import DefaultChannelCover from "@src/assets/bg/channel-cover-default.png";
-import LogoImage from "@public/logo.png?url";
+import LogoImage from "@src/assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
