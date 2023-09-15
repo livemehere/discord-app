@@ -4,17 +4,26 @@ import * as path from "path";
 import svgr from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    react(),
-    svgr({
-      exportAsDefault: true,
-    }),
-  ],
-  resolve: {
-    alias: {
-      "@src": path.resolve(__dirname, "./src"),
-      "@public": path.resolve(__dirname, "./public"),
+export default ({ mode }) => {
+  const IS_PROD = mode === "production";
+  return defineConfig({
+    plugins: [
+      react(),
+      svgr({
+        exportAsDefault: true,
+      }),
+    ],
+    resolve: {
+      alias: {
+        "@src": path.resolve(__dirname, "./src"),
+        "@public": path.resolve(__dirname, "./public"),
+      },
     },
-  },
-});
+    build: {
+      sourcemap: IS_PROD ? false : "inline",
+    },
+    esbuild: {
+      drop: IS_PROD ? ["console"] : [],
+    },
+  });
+};
