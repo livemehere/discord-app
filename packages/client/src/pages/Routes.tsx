@@ -10,7 +10,11 @@ export const Routes: FC<Props> = ({}) => {
   return (
     <BrowserRouter>
       <ReactRoutes>
-        <Route path={"/"} element={<Home />} />
+        <Route path={"/"}>
+          <Route path={"/"} element={<Home />} />
+          <Route path={"/:channelId"} element={<Home />} />
+          <Route path={"/:channelId/:subChannelId"} element={<Home />} />
+        </Route>
         <Route path={"/guild-discovery"} element={<GuildDiscovery />} />
       </ReactRoutes>
     </BrowserRouter>

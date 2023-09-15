@@ -1,21 +1,30 @@
 import { css } from "@emotion/react";
 import { DiscordSubChannels } from "@src/components/subChannel/DiscordSubChannels.tsx";
-import { channelStore } from "@src/store/channelStore.ts";
 import { BottomMenu } from "@src/components/subChannel/BottomMenu.tsx";
 import { useChannels } from "@src/hooks/reactQueries/useChannels.ts";
 import { userStore } from "@src/store/userStore.ts";
 import { SubSideBar } from "@src/components/common/SubSideBar/SubSideBar.tsx";
+import { useNavigate, useParams } from "react-router-dom";
+import { SubChannel } from "@src/types";
 
 export const SubChannelSideBar = () => {
-  const { currentChannelId, setSubChannelId, currentSubChannelId } =
-    channelStore();
+  const navigate = useNavigate();
+  const params = useParams();
   const { user } = userStore();
   const { getChannelById, getSubChannelById } = useChannels(user?.id);
+
+  // 채널, 서브채널 정보
+  const currentChannelId = params.channelId;
+  const currentSubChannelId = params.subChannelId;
   const currentChannel = getChannelById(currentChannelId);
   const currentSubChannel = getSubChannelById(
     currentSubChannelId,
     currentChannel,
   );
+
+  const onChangeSubChannel = (subChannel: SubChannel) => {
+    navigate(`/${currentChannelId}/${subChannel.id}`);
+  };
 
   return (
     <SubSideBar>
@@ -30,7 +39,7 @@ export const SubChannelSideBar = () => {
       <DiscordSubChannels
         value={currentSubChannel}
         list={currentChannel?.subChannels || []}
-        onChange={(subChannel) => setSubChannelId(subChannel.id)}
+        onChange={onChangeSubChannel}
       />
       <BottomMenu />
     </SubSideBar>

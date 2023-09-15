@@ -7,12 +7,12 @@ import { createSubChannel } from "@src/api";
 import { userStore } from "@src/store/userStore.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import { CHANNELS_KEY } from "@src/hooks/reactQueries/useChannels.ts";
-import { channelStore } from "@src/store/channelStore.ts";
 import { ModalRadio } from "@src/components/modals/ModalRadio.tsx";
 import SharpIcon from "@public/svg/sharp.svg";
 import SpeakerIcon from "@public/svg/speaker.svg";
 import { ModalSmallTitle } from "@src/components/modals/ModalSmallTitle.tsx";
 import { SubChannel } from "@src/types";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface Props {
   close: () => void;
@@ -23,9 +23,12 @@ export const CreateSubChannelModalContent: FC<Props> = ({ close }) => {
   const [description, setDescription] = useState("");
   const [type, setType] = useState<SubChannel["type"]>("TEXT");
   const disabled = channelName.length < 2;
-  const { user } = userStore();
-  const { setSubChannelId, currentChannelId, setChannelId } = channelStore();
+
   const queryClient = useQueryClient();
+  const { user } = userStore();
+  const navigate = useNavigate();
+  const params = useParams();
+  const currentChannelId = params.channelId;
 
   const handleCreate = async () => {
     if (!user || !currentChannelId) return;
@@ -35,8 +38,7 @@ export const CreateSubChannelModalContent: FC<Props> = ({ close }) => {
       type,
     }).then((res) => res.data);
     await queryClient.invalidateQueries({ queryKey: [CHANNELS_KEY] });
-    setSubChannelId(newSubChannel.id);
-    setChannelId(newSubChannel.channelId);
+    navigate(`/${currentChannelId}/${newSubChannel.id}`);
     close();
   };
 

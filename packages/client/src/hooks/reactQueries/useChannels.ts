@@ -17,7 +17,7 @@ export const useChannels = (userId?: string) => {
   );
 
   const getSubChannelById = useCallback(
-    (subChannelId: string | null, channel?: Channel) => {
+    (subChannelId?: string | null, channel?: Channel) => {
       return channel?.subChannels.find(
         (subChannel) => subChannel.id === subChannelId,
       );

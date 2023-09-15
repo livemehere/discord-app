@@ -7,7 +7,7 @@ import { createChannel } from "@src/api";
 import { userStore } from "@src/store/userStore.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import { CHANNELS_KEY } from "@src/hooks/reactQueries/useChannels.ts";
-import { channelStore } from "@src/store/channelStore.ts";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   close: () => void;
@@ -18,7 +18,8 @@ export const CreateChannelModalContent: FC<Props> = ({ close }) => {
   const [description, setDescription] = useState("");
   const disabled = channelName.length < 2;
   const { user } = userStore();
-  const { setChannelId, setSubChannelId } = channelStore();
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
   const handleCreate = async () => {
     if (!user) return;
@@ -28,8 +29,7 @@ export const CreateChannelModalContent: FC<Props> = ({ close }) => {
       moderatorId: user.id,
     });
     await queryClient.invalidateQueries({ queryKey: [CHANNELS_KEY] });
-    setChannelId(newChannel.id);
-    setSubChannelId(newChannel.subChannels[0].id);
+    navigate(`/${newChannel.id}/${newChannel.subChannels[0].id}`);
     close();
   };
   return (
