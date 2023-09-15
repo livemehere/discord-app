@@ -20,6 +20,11 @@ export const getChannels = (userId: string) =>
     .get<Channel[]>(`/api/users/${userId}/channels`)
     .then((res) => res.data);
 
+export const searchChannels = (q: string) =>
+  instance
+    .get<Channel[]>(`/api/channels`, { params: { q } })
+    .then((res) => res.data);
+
 export const createChannel = ({
   name,
   description,

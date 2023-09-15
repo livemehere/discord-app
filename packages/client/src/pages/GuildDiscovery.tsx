@@ -6,6 +6,8 @@ import { SideMenuItem } from "@src/components/common/SideMenuItem.tsx";
 import ExploreIcon from "@src/assets/svg/explore.svg";
 import { css } from "@emotion/react";
 import { DiscoverySearchHeader } from "@src/components/discovery/DiscoverySearchHeader.tsx";
+import { useDebounceValue } from "@src/hooks/useDebounceValue.ts";
+import { useSearchChannels } from "@src/hooks/reactQueries/useSearchChannels.ts";
 
 interface Props {}
 
@@ -18,7 +20,9 @@ const menuItems = [
 
 export const GuildDiscovery: FC<Props> = ({}) => {
   const [activeMenu, setActiveMenu] = useState(menuItems[0]);
-  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("");
+  const debouncedQuery = useDebounceValue(query, 500);
+  const { channels } = useSearchChannels(debouncedQuery);
 
   return (
     <Layout>
@@ -42,7 +46,16 @@ export const GuildDiscovery: FC<Props> = ({}) => {
           );
         })}
       </SubSideBar>
-      <DiscoverySearchHeader value={search} onChange={setSearch} />
+      <div
+        css={css`
+          flex: 1;
+        `}
+      >
+        <DiscoverySearchHeader value={query} onChange={setQuery} />
+        <ul>
+          {channels?.map((channel) => <li key={channel.id}>{channel.name}</li>)}
+        </ul>
+      </div>
     </Layout>
   );
 };
