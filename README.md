@@ -12,13 +12,13 @@ yarn db:migration # prisma migrate to localhost:3306 mysql
 
 ## Structure
 
-### client
+### Client
 
 - framework: `react`
 - state management: `zustand`, `react-query`
 - style : `@emotion/react`, `@emotion/styled`, `framer-motion`
 
-### server
+### Server
 
 - framework: `nestjs`
 - orm: `prisma`
@@ -44,15 +44,15 @@ only login with username
 
 ![4.discover-channel.png](img%2F4.discover-channel.png)
 
-### 3. start Chatting with others!
+### 3. Start Chatting with others!
 
 ![3.start-chat.png](img%2F3.start-chat.png)
 
-### 4. you can check online members
+### 4. You can check online members
 
 ![5.check-online-members.png](img%2F5.check-online-members.png)
 
-### 5. start Voice Chatting
+### 5. Start Voice Chatting
 
 > Before start voice chatting, you need to set audio input device
 
