@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: kong1234
       MYSQL_DATABASE: discord
     volumes:
-      - mysql-data:/var/lib/mysql
+      - /Volumes:/var/lib/mysql --user 1000
     networks:
       - inner_net
 
@@ -34,3 +34,4 @@ services:
 
 networks:
   inner_net:
+

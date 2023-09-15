@@ -4,15 +4,16 @@
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "yarn prisma generate && nest build",
     "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:prod": "node dist/main",
-    "docker-compose:build": "docker-compose build --no-cache",
-    "docker-compose:start": "docker-compose up -d --force-recreate",
-    "db-push": "prisma db push"
+    "start:dev": "NODE_ENV=development nest start --watch",
+    "start:prod": "NODE_ENV=production node dist/main",
+    "start:docker": "NODE_ENV=docker node dist/main",
+    "build:docker-compose": "docker-compose build --no-cache",
+    "start:docker-compose": "docker-compose up -d --force-recreate",
+    "db-push": "yarn dotenv -e .env.production yarn prisma db push"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -24,6 +25,7 @@
     "@socket.io/redis-adapter": "^8.2.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "dotenv": "^16.3.1",
     "redis": "^4.6.8",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
@@ -39,6 +41,7 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",

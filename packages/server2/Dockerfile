@@ -8,8 +8,6 @@ RUN yarn
 
 COPY . .
 
-RUN npm install -g prisma
-
 RUN yarn build
 
-CMD ["yarn", "start:prod"]
+CMD ["yarn", "start:docker"]
