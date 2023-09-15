@@ -14,7 +14,7 @@ export const AudioAndVideoSetting: FC<Props> = ({}) => {
     setAudioDeviceList,
   } = settingStore();
 
-  const streamRef = useAudioStream(audioDeviceId);
+  const stream = useAudioStream(audioDeviceId);
   const deviceLIst = useMediaDevices();
 
   useEffect(() => {
@@ -26,8 +26,8 @@ export const AudioAndVideoSetting: FC<Props> = ({}) => {
       <h2>음성 설정</h2>
       <audio
         ref={(el) => {
-          if (!el) return;
-          el.srcObject = streamRef.current;
+          if (!el || !stream) return;
+          el.srcObject = stream;
           el.play();
         }}
       />

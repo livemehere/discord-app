@@ -12,21 +12,15 @@ interface Props {
 }
 
 export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
-  const {
-    audioDeviceId,
-    setAudioDeviceId,
-    audioDeviceList,
-    setAudioDeviceList,
-  } = settingStore();
+  const { audioDeviceId, mic, sound } = settingStore();
   const { emit } = useSocket();
 
-  const streamRef = useAudioStream(audioDeviceId);
+  const stream = useAudioStream(audioDeviceId);
   const audioRef = useRef<HTMLAudioElement>(null);
   const { user } = userStore();
 
   useEffect(() => {
-    const stream = streamRef.current;
-    if (!stream || !user) return;
+    if (!stream || !user || !mic) return;
 
     let chunks: Blob[] = [];
     const mediaRecorder = new MediaRecorder(stream);
@@ -56,12 +50,10 @@ export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
     return () => {
       clearInterval(startTimer);
     };
-
-    // emit("audio", { subChannelId: subChannel.id, stream: streamRef.current });
-  }, [emit, audioDeviceId, user]);
+  }, [emit, audioDeviceId, user, stream, mic]);
 
   useSocketEvent("audio", (data) => {
-    console.log("receive", data);
+    if (!sound) return;
     const blob = new Blob([data.blob], { type: "audio/ogg; codecs=opus" });
     const audio = audioRef.current;
     if (!audio) return;

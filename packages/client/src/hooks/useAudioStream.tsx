@@ -1,8 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export const useAudioStream = (audioDeviceId?: string) => {
-  const streamRef = useRef<MediaStream | null>(null);
-
+  const [stream, setStream] = useState<MediaStream | null>(null);
   useEffect(() => {
     if (!audioDeviceId) return;
     navigator.mediaDevices
@@ -13,9 +12,9 @@ export const useAudioStream = (audioDeviceId?: string) => {
         video: false,
       })
       .then((stream) => {
-        streamRef.current = stream;
+        setStream(stream);
       });
   }, [audioDeviceId]);
 
-  return streamRef;
+  return stream;
 };
