@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 import { FC, InputHTMLAttributes, ReactNode } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,6 +7,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
   iconColor?: string;
   onClickIcon?: () => void;
+  customCss?: SerializedStyles;
 }
 
 export const CommonInput: FC<Props> = ({
@@ -15,6 +16,7 @@ export const CommonInput: FC<Props> = ({
   icon,
   iconColor,
   onClickIcon,
+  customCss,
   ...props
 }) => {
   return (
@@ -22,6 +24,7 @@ export const CommonInput: FC<Props> = ({
       css={css`
         background-color: ${bgColor};
         display: flex;
+        align-items: center;
         padding: 4px 8px;
         border-radius: 2px;
         svg {
@@ -29,12 +32,13 @@ export const CommonInput: FC<Props> = ({
             fill: ${iconColor ? iconColor : color};
           }
         }
+        ${customCss}
       `}
     >
       <input
         type="text"
         css={css`
-          width: 100%;
+          flex: 1;
           height: 100%;
           background: transparent;
           color: ${color};
