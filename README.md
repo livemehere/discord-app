@@ -10,6 +10,26 @@ yarn server:start # build with docker-compose and start docker-compose (server:8
 yarn db:migration # prisma migrate to localhost:3306 mysql
 ```
 
+## Structure
+
+### client
+
+- framework: `react`
+- state management: `zustand`, `react-query`
+- style : `@emotion/react`, `@emotion/styled`, `framer-motion`
+
+### server
+
+- framework: `nestjs`
+- orm: `prisma`
+- cache: `redis`
+- database: `mysql`
+- websocket: `socket.io`
+- infra: `docker`, `docker-compose`
+
+![structure.png](img%2Fstructure.png)
+
+
 ## Guide 
 
 ### 1.Login
@@ -43,3 +63,4 @@ only login with username
 ### 6. And you can create other sub channels
 
 ![8.you-can-craete-other-subChannel.png](img%2F8.you-can-craete-other-subChannel.png)
+
