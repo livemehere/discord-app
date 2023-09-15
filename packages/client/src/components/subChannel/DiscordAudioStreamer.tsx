@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { settingStore } from "@src/store/settingStore.ts";
 import { useAudioStream } from "@src/hooks/useAudioStream.tsx";
 import { SubChannel } from "@src/types";
@@ -24,6 +24,8 @@ export const DiscordAudioStreamer: FC<Props> = ({
   const joinedMembers = onlineMembers.filter((m) =>
     m.rooms.includes(subChannel.id),
   );
+
+  const [speakers, setSpeakers] = useState<string[]>([]);
 
   const stream = useAudioStream(audioDeviceId);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -64,14 +66,27 @@ export const DiscordAudioStreamer: FC<Props> = ({
     };
   }, [emit, audioDeviceId, user, stream, mic, streamOn]);
 
-  useSocketEvent("audio", (data) => {
-    if (!sound) return;
-    const blob = new Blob([data.blob], { type: "audio/ogg; codecs=opus" });
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.src = URL.createObjectURL(blob);
-    audio.play();
-  });
+  useSocketEvent(
+    "audio",
+    (data: { subChannelId: string; userId: string; blob: Blob }) => {
+      if (!sound) return;
+      const blob = new Blob([data.blob], { type: "audio/ogg; codecs=opus" });
+      const audio = audioRef.current;
+      if (!audio) return;
+      audio.src = URL.createObjectURL(blob);
+      audio.play();
+
+      // 화자 표시
+      setSpeakers((prev) => {
+        if (prev.includes(data.userId)) return prev;
+        return [...prev, data.userId];
+      });
+
+      setTimeout(() => {
+        setSpeakers((prev) => prev.filter((p) => p !== data.userId));
+      }, 1000);
+    },
+  );
 
   return (
     <div
@@ -89,6 +104,7 @@ export const DiscordAudioStreamer: FC<Props> = ({
           <User
             key={member.userId}
             userId={member.userId}
+            showStroke={speakers.includes(member.userId)}
             avatarSize={24}
             css={css`
               padding: 3px 0;

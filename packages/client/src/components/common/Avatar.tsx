@@ -7,6 +7,7 @@ interface Props {
   size?: number;
   bgColor?: string;
   status?: "online" | "offline";
+  showStroke?: boolean;
 }
 
 export const Avatar: FC<Props> = ({
@@ -14,6 +15,7 @@ export const Avatar: FC<Props> = ({
   size = 32,
   bgColor,
   status = "offline",
+  showStroke = false,
 }) => {
   return (
     <div
@@ -28,6 +30,10 @@ export const Avatar: FC<Props> = ({
         display: flex;
         align-items: center;
         justify-content: center;
+        ${showStroke &&
+        css`
+          outline: 2px solid var(--green-color);
+        `}
         svg {
           path {
             fill: #fff;
