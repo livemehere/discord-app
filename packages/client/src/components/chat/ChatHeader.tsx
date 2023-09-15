@@ -22,7 +22,7 @@ export const ChatHeader: FC<Props> = ({ value }) => {
         background: var(--background-100);
       `}
     >
-      <DiscordSubChannel value={value} active={false} highLight={true} />
+      <DiscordSubChannel subChannel={value} active={false} highLight={true} />
       <p
         css={css`
           color: var(--text-muted);

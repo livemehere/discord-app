@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { DiscordSubChannel } from "@src/components/subChannel/DiscordSubChannel.tsx";
 import { css } from "@emotion/react";
 import { CategoryList } from "@src/components/subChannel/CategoryList.tsx";
@@ -11,6 +11,7 @@ import { CreateSubChannelModalContent } from "@src/components/modals/CreateSubCh
 import { SubChannel } from "@src/types";
 import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
 import { useParams } from "react-router-dom";
+import { DiscordAudioStreamer } from "@src/components/subChannel/DiscordAudioStreamer.tsx";
 
 interface Props {
   list: SubChannel[];
@@ -94,7 +95,7 @@ export const DiscordSubChannels: FC<Props> = ({ list, onChange, value }) => {
         {textOnlyChannels.map((subChannel) => (
           <DiscordSubChannel
             key={subChannel.id}
-            value={subChannel}
+            subChannel={subChannel}
             highLight={isHighLight(subChannel.id)}
             active={value?.id === subChannel.id}
             onClick={() => handleChangeSubChannel(subChannel)}
@@ -119,14 +120,19 @@ export const DiscordSubChannels: FC<Props> = ({ list, onChange, value }) => {
         showChildren={showAudioTextChannel}
       >
         {audioTextChannels.map((subChannel) => (
-          <DiscordSubChannel
-            key={subChannel.id}
-            value={subChannel}
-            highLight={false}
-            active={value?.id === subChannel.id}
-            onClick={() => handleChangeSubChannel(subChannel)}
-            icon={<SpeakerIcon width={20} height={20} />}
-          />
+          <Fragment key={subChannel.id}>
+            <DiscordSubChannel
+              subChannel={subChannel}
+              highLight={false}
+              active={value?.id === subChannel.id}
+              onClick={() => handleChangeSubChannel(subChannel)}
+              icon={<SpeakerIcon width={20} height={20} />}
+            />
+            {subChannel.type === "AUDIO_TEXT" &&
+              value?.id === subChannel.id && (
+                <DiscordAudioStreamer subChannel={subChannel} />
+              )}
+          </Fragment>
         ))}
       </CategoryList>
     </ul>

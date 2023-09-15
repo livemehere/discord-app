@@ -3,7 +3,7 @@ import { FC, ReactNode } from "react";
 import { SubChannel } from "@src/types";
 
 interface Props {
-  value: SubChannel;
+  subChannel: SubChannel;
   active: boolean;
   highLight: boolean;
   onClick?: (subChannel: SubChannel) => void;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const DiscordSubChannel: FC<Props> = ({
-  value,
+  subChannel,
   active,
   onClick,
   highLight,
@@ -19,7 +19,7 @@ export const DiscordSubChannel: FC<Props> = ({
 }) => {
   return (
     <li
-      key={value.id}
+      key={subChannel.id}
       css={css`
         padding: 6px 8px;
         display: flex;
@@ -40,10 +40,10 @@ export const DiscordSubChannel: FC<Props> = ({
           color: var(--text-active);
         `}
       `}
-      onClick={() => onClick?.(value)}
+      onClick={() => onClick?.(subChannel)}
     >
       {icon}
-      <span>{value.name}</span>
+      <span>{subChannel.name}</span>
     </li>
   );
 };
