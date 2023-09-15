@@ -128,10 +128,9 @@ export const DiscordSubChannels: FC<Props> = ({ list, onChange, value }) => {
               onClick={() => handleChangeSubChannel(subChannel)}
               icon={<SpeakerIcon width={20} height={20} />}
             />
-            {subChannel.type === "AUDIO_TEXT" &&
-              value?.id === subChannel.id && (
-                <DiscordAudioStreamer subChannel={subChannel} />
-              )}
+            {subChannel.type === "AUDIO_TEXT" && (
+              <DiscordAudioStreamer subChannel={subChannel} />
+            )}
           </Fragment>
         ))}
       </CategoryList>
