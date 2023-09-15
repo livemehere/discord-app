@@ -1,20 +1,22 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
+export type OnlineMember = { userId: string; rooms: string[] };
+
 interface State {
-  onlineMemberIds: string[];
+  onlineMembers: OnlineMember[];
 }
 
 interface Actions {
-  setOnlineMemberIds: (onlineMemberIds: string[]) => void;
+  setOnlineMembers: (onlineMemberIds: OnlineMember[]) => void;
 }
 
 export const channelStore = create<State & Actions>()(
   devtools(
     (set) => ({
-      onlineMemberIds: [],
-      setOnlineMemberIds: (onlineMemberIds) =>
-        set({ onlineMemberIds }, false, "setOnlineMemberIds"),
+      onlineMembers: [],
+      setOnlineMembers: (members) =>
+        set({ onlineMembers: members }, false, "setOnlineMemberIds"),
     }),
     { name: "channelStore" },
   ),

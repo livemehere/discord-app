@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 export const OnlineMemberList = () => {
   const { user } = userStore();
-  const { onlineMemberIds } = channelStore();
+  const { onlineMembers } = channelStore();
   const params = useParams();
   const currentChannelId = params.channelId;
 
@@ -16,7 +16,7 @@ export const OnlineMemberList = () => {
 
   const offlineMemberIds =
     currentChannel?.members.filter(
-      (member) => !onlineMemberIds.includes(member.userId),
+      (member) => !onlineMembers.map((m) => m.userId).includes(member.userId),
     ) ?? [];
 
   return (
@@ -32,9 +32,9 @@ export const OnlineMemberList = () => {
         }
       `}
     >
-      <h3>온라인 — {onlineMemberIds.length}</h3>
-      {onlineMemberIds.map((userId) => (
-        <User key={userId} userId={userId} online={true} />
+      <h3>온라인 — {onlineMembers.length}</h3>
+      {onlineMembers.map((member) => (
+        <User key={member.userId} userId={member.userId} online={true} />
       ))}
 
       <h3>오프라인 — {offlineMemberIds.length}</h3>

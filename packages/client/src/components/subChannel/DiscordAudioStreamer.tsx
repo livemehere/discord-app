@@ -37,11 +37,12 @@ export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
       emit("audio", { subChannelId: subChannel.id, userId: user.id, blob });
     };
 
-    const startTimer = setInterval(function () {
+    let stopTimer: number | undefined = undefined;
+    const startTimer = window.setInterval(function () {
       console.log("start");
       mediaRecorder.start();
 
-      setTimeout(() => {
+      stopTimer = window.setTimeout(() => {
         console.log("stop");
         mediaRecorder.stop();
       }, 490);
@@ -49,6 +50,7 @@ export const DiscordAudioStreamer: FC<Props> = ({ subChannel }) => {
 
     return () => {
       clearInterval(startTimer);
+      clearTimeout(stopTimer);
     };
   }, [emit, audioDeviceId, user, stream, mic]);
 

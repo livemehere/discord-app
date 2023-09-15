@@ -3,7 +3,7 @@ import { Routes } from "@src/pages/Routes.tsx";
 import { userStore } from "@src/store/userStore.ts";
 import { useModal } from "@src/providers/ModalProvider/hook.ts";
 import { useSocket } from "@src/providers/SocketProvider/hooks/useSocket.ts";
-import { channelStore } from "@src/store/channelStore.ts";
+import { channelStore, OnlineMember } from "@src/store/channelStore.ts";
 import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
 import { LoginModal } from "@src/components/modals/LoginModal.tsx";
 import { CHANNELS_KEY } from "@src/hooks/reactQueries/useChannels.ts";
@@ -17,7 +17,7 @@ export const Discord = () => {
   const { open } = settingStore();
   const { pushModal, closeModal } = useModal();
   const { connect, join, connected } = useSocket();
-  const { setOnlineMemberIds } = channelStore();
+  const { setOnlineMembers } = channelStore();
   const queryClient = useQueryClient();
 
   // 2.유저 로그인 되면 소켓 연결
@@ -33,9 +33,9 @@ export const Discord = () => {
     }
   }, [connected]);
 
-  useSocketEvent("online-members", (ids) => {
+  useSocketEvent("online-members", (members: OnlineMember[]) => {
     console.log("채널 멤버들의 온라인상태가 변경되었습니다.");
-    setOnlineMemberIds(ids);
+    setOnlineMembers(members);
     queryClient.invalidateQueries([CHANNELS_KEY]);
   });
 
