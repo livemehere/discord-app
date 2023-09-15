@@ -1,14 +1,11 @@
 import { css } from "@emotion/react";
-import { FC } from "react";
 import { channelStore } from "@src/store/channelStore.ts";
 import { useChannels } from "@src/hooks/reactQueries/useChannels.ts";
 import { userStore } from "@src/store/userStore.ts";
 import { User } from "@src/components/onlineMembers/User.tsx";
 import { useParams } from "react-router-dom";
 
-interface Props {}
-
-export const OnlineMemberList: FC<Props> = ({}) => {
+export const OnlineMemberList = () => {
   const { user } = userStore();
   const { onlineMemberIds } = channelStore();
   const params = useParams();

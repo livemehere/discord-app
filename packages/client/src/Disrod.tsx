@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { Routes } from "@src/pages/Routes.tsx";
 import { userStore } from "@src/store/userStore.ts";
 import { useModal } from "@src/providers/ModalProvider/hook.ts";
@@ -7,9 +7,7 @@ import { channelStore } from "@src/store/channelStore.ts";
 import { useSocketEvent } from "@src/providers/SocketProvider/hooks/useSocketEvent.ts";
 import { LoginModal } from "@src/components/modals/LoginModal.tsx";
 
-interface Props {}
-
-export const Discord: FC<Props> = ({}) => {
+export const Discord = () => {
   const { login, user } = userStore();
   const { pushModal, closeModal } = useModal();
   const { connect, join, connected } = useSocket();

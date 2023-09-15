@@ -1,5 +1,4 @@
 import { css } from "@emotion/react";
-import { FC } from "react";
 import { useChannels } from "@src/hooks/reactQueries/useChannels.ts";
 import { userStore } from "@src/store/userStore.ts";
 import { Channel } from "@src/types";
@@ -11,9 +10,7 @@ import ExploreIcon from "@public/svg/explore.svg";
 import { useModal } from "@src/providers/ModalProvider/hook.ts";
 import { CreateChannelModalContent } from "@src/components/modals/CreateChannelModalContent.tsx";
 
-interface Props {}
-
-export const SideBar: FC<Props> = ({}) => {
+export const SideBar = () => {
   const { user } = userStore();
   const { data: channels } = useChannels(user?.id);
 
