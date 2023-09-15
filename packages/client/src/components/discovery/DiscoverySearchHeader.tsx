@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import { FC } from "react";
 import { CommonInput } from "@src/components/common/CommonInput.tsx";
 import SearchIcon from "@public/svg/search.svg";
+import DiscoveryBg from "@public/bg/discovery-bg.svg?url";
 
 interface Props {
   value: string;
@@ -31,7 +32,7 @@ export const DiscoverySearchHeader: FC<Props> = ({ value, onChange }) => {
         }
       `}
     >
-      <img src={"/bg/discovery-bg.svg"} alt="" />
+      <img src={DiscoveryBg} alt="" />
       <div
         css={css`
           position: relative;
