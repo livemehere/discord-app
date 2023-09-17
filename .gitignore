@@ -3,4 +3,6 @@ node_modules
 dist
 build
 
-packages/server/prisma/migrations
+packages/server2/prisma/migrations
+
+

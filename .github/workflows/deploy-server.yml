@@ -20,6 +20,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: create docker env
+        run: |
+          rm -rf .env.docker
+          echo "PORT=$PORT" >> .env.docker
+          echo "DATABASE_URL=$DATABASE_URL" >> .env.docker
+          echo "REDIS_HOST=$REDIS_HOST" >> .env.docker
+          echo "REDIS_PORT=$REDIS_PORT" >> .env.docker
+        env:
+            PORT: ${{ secrets.PORT }}
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            REDIS_HOST: ${{ secrets.REDIS_HOST }}
+            REDIS_PORT: ${{ secrets.REDIS_PORT }}
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
