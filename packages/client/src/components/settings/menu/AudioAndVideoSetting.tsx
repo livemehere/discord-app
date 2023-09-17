@@ -16,11 +16,12 @@ export const AudioAndVideoSetting: FC<Props> = ({}) => {
   } = settingStore();
 
   const stream = useAudioStream(audioDeviceId);
-  const deviceLIst = useMediaDevices();
+  const deviceList = useMediaDevices();
 
   useEffect(() => {
-    setAudioDeviceList(deviceLIst);
-  }, [deviceLIst]);
+    setAudioDeviceList(deviceList);
+    setAudioDeviceId(deviceList[0]?.deviceId);
+  }, [deviceList]);
 
   return (
     <div css={css``}>
