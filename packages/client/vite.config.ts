@@ -21,12 +21,6 @@ export default ({ mode }) => {
     },
     build: {
       sourcemap: IS_PROD ? false : "inline",
-      rollupOptions: {
-        input: {
-          main: "./index.html",
-          sw: "./sw.js",
-        },
-      },
     },
     esbuild: {
       drop: IS_PROD ? ["console"] : [],
