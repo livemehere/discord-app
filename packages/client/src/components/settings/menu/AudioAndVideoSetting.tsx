@@ -3,6 +3,7 @@ import { FC, useEffect } from "react";
 import { settingStore } from "@src/store/settingStore.ts";
 import { useAudioStream } from "@src/hooks/useAudioStream.tsx";
 import { useMediaDevices } from "@src/hooks/useMediaDevices.ts";
+import { DiscordTooltip } from "@src/components/utils/DiscordTooltip.tsx";
 
 interface Props {}
 
@@ -41,16 +42,21 @@ export const AudioAndVideoSetting: FC<Props> = ({}) => {
         `}
       >
         <h5>녹음 장치</h5>
-        <select
-          value={audioDeviceId}
-          onChange={(v) => setAudioDeviceId(v.target.value)}
+        <DiscordTooltip
+          overlay={<span>녹음 장치를 선택하면서, 소리를 확인해보세요!</span>}
+          placement="bottom"
         >
-          {audioDeviceList.map((device) => (
-            <option key={device.deviceId} value={device.deviceId}>
-              {device.label}
-            </option>
-          ))}
-        </select>
+          <select
+            value={audioDeviceId}
+            onChange={(v) => setAudioDeviceId(v.target.value)}
+          >
+            {audioDeviceList.map((device) => (
+              <option key={device.deviceId} value={device.deviceId}>
+                {device.label}
+              </option>
+            ))}
+          </select>
+        </DiscordTooltip>
       </div>
     </div>
   );

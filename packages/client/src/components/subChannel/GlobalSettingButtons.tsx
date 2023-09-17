@@ -10,7 +10,7 @@ import { settingStore } from "@src/store/settingStore.ts";
 interface Props {}
 
 export const GlobalSettingButtons: FC<Props> = ({}) => {
-  const { setMic, setSound, mic, sound, setOpen } = settingStore();
+  const { setMic, setSound, mic, sound, openSettingWith } = settingStore();
 
   return (
     <div
@@ -45,7 +45,8 @@ export const GlobalSettingButtons: FC<Props> = ({}) => {
       <button onClick={() => setSound(!sound)}>
         {sound ? <HeadsetIcon /> : <HeadsetDisableIcon />}
       </button>
-      <button onClick={() => setOpen(true)}>
+
+      <button onClick={() => openSettingWith("audio")}>
         <SettingIcon />
       </button>
     </div>

@@ -5,9 +5,15 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   onClick?: () => void;
   active?: boolean;
+  disabled?: boolean;
 }
 
-export const CommonButton: FC<Props> = ({ children, active, ...props }) => {
+export const CommonButton: FC<Props> = ({
+  children,
+  active,
+  disabled,
+  ...props
+}) => {
   return (
     <button
       css={css`
@@ -19,7 +25,7 @@ export const CommonButton: FC<Props> = ({ children, active, ...props }) => {
         color: var(--text-muted);
         font-weight: 500;
         border-radius: 6px;
-        :hover {
+        :hover:not(:disabled) {
           color: var(--text-normal);
           background: rgba(255, 255, 255, 0.04);
         }
@@ -29,7 +35,14 @@ export const CommonButton: FC<Props> = ({ children, active, ...props }) => {
           color: var(--text-active);
           background: rgba(255, 255, 255, 0.04);
         `}
+
+        ${disabled &&
+        css`
+          opacity: 0.5;
+          cursor: default;
+        `}
       `}
+      disabled={disabled}
       {...props}
     >
       {children}

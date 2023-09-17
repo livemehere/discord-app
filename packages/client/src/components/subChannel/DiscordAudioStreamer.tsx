@@ -18,7 +18,7 @@ export const DiscordAudioStreamer: FC<Props> = ({
   subChannel,
   streamOn = false,
 }) => {
-  const { audioDeviceId, mic, sound } = settingStore();
+  const { audioDeviceId, mic, sound, openSettingWith } = settingStore();
   const { emit } = useSocket();
   const { onlineMembers } = channelStore();
   const joinedMembers = onlineMembers.filter((m) =>
@@ -30,6 +30,12 @@ export const DiscordAudioStreamer: FC<Props> = ({
   const stream = useAudioStream(audioDeviceId);
   const audioRef = useRef<HTMLAudioElement>(null);
   const { user } = userStore();
+
+  useEffect(() => {
+    if (!audioDeviceId && mic) {
+      openSettingWith("audio");
+    }
+  }, [audioDeviceId, mic]);
 
   useEffect(() => {
     if (!stream || !user || !mic || !streamOn) return;
