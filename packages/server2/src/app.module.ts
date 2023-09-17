@@ -4,10 +4,11 @@ import { DbModule } from './db/db.module';
 import { ChatsModule } from './chats/chats.module';
 import { EventsModule } from './events/events.module';
 import { SocketModule } from './socket/socket.module';
+import { AppController } from './app/app.controller';
 
 @Module({
   imports: [UsersModule, DbModule, ChatsModule, EventsModule, SocketModule],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

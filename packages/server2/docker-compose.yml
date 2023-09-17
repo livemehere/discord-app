@@ -1,19 +1,6 @@
 version: "3.9"
 
 services:
-  db:
-    image: mysql
-    restart: always
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: kong1234
-      MYSQL_DATABASE: discord
-    volumes:
-      - /Volumes:/var/lib/mysql --user 1000
-    networks:
-      - inner_net
-
   redis:
     image: redis
     restart: always
@@ -29,7 +16,7 @@ services:
     networks:
       - inner_net
     depends_on:
-      - db
+      - redis
     restart: always
 
 networks:
