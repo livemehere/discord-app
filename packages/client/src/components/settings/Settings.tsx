@@ -52,7 +52,7 @@ export const Settings = () => {
     >
       <SubSideBar
         css={css`
-          padding-left: 200px;
+          padding-left: 10vw;
           padding-right: 12px;
         `}
       >
@@ -86,6 +86,7 @@ export const Settings = () => {
       <section
         css={css`
           padding-top: 60px;
+          padding-right: 40px;
         `}
       >
         <CloseButton onClick={() => setOpen(false)} />
