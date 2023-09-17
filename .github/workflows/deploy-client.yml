@@ -20,22 +20,17 @@ jobs:
         run: yarn
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
-      - name: create env
-        run: |
-          rm -rf .env.production
-          echo "VITE_SERVER_URL=$VITE_SERVER_URL" >> .env.production
-        env:
-          $VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-
       - name: Build
         run: yarn build
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Deploy
-        uses: lbertenasco/s3-deploy@v1
+        uses: jakejarvis/s3-sync-action@master
         with:
-          folder: './packages/client/dist'
-          bucket: ${{ secrets.S3_BUCKET }}
-          dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-          invalidation: / *
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: './packages/client/dist'
