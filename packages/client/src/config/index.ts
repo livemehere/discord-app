@@ -1,3 +1,3 @@
 export const config = {
-  SERVER_URL: "http://api.rhdxoals.com",
+  SERVER_URL: "https://discord-api.rhdxoals.com/",
 };
